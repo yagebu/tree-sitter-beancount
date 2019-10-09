@@ -1,0 +1,21 @@
+{
+  "name": "tree-sitter-beancount",
+  "version": "0.0.1",
+  "description": "tree-sitter grammar for Beancount",
+  "main": "index.js",
+  "scripts": {
+    "lint": "prettier grammar.js --write",
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test"
+  },
+  "author": "",
+  "license": "MIT",
+  "prettier": {
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2",
+    "regexpu": "^4.5.4",
+    "tree-sitter-cli": "^0.15.9"
+  }
+}
