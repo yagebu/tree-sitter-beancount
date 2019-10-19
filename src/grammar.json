@@ -21,19 +21,6 @@
         ]
       }
     },
-    "comment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": ";.*"
-        },
-        {
-          "type": "PATTERN",
-          "value": "\\n"
-        }
-      ]
-    },
     "_skipped_lines": {
       "type": "CHOICE",
       "members": [
@@ -76,8 +63,17 @@
           "value": "\\n"
         },
         {
-          "type": "SYMBOL",
-          "name": "comment"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": ";.*"
+            },
+            {
+              "type": "PATTERN",
+              "value": "\\n"
+            }
+          ]
         }
       ]
     },
@@ -139,24 +135,24 @@
         }
       ]
     },
-    "key_value_line": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "\\n[ \\r\\t]+"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "key_value"
-        }
-      ]
-    },
     "metadata": {
-      "type": "REPEAT1",
+      "type": "PREC_LEFT",
+      "value": 2,
       "content": {
-        "type": "SYMBOL",
-        "name": "key_value_line"
+        "type": "REPEAT1",
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\\n[ \\r\\t]+"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "key_value"
+            }
+          ]
+        }
       }
     },
     "_undated_directives": {
@@ -436,8 +432,134 @@
       ]
     },
     "cost_comp_list": {
-      "type": "STRING",
-      "value": "TODO"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "cost_comp"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "cost_comp"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "cost_comp": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "compound_amount"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "date"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "STRING",
+          "value": "*"
+        }
+      ]
+    },
+    "compound_amount": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_num_expr"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "currency"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_num_expr"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "currency"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_num_expr"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_num_expr"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "currency"
+            }
+          ]
+        }
+      ]
     },
     "incomplete_amount": {
       "type": "CHOICE",
@@ -534,121 +656,109 @@
       ]
     },
     "posting": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "PATTERN",
+          "value": "\\n[ \\r\\t]+"
+        },
+        {
+          "type": "CHOICE",
           "members": [
             {
-              "type": "PATTERN",
-              "value": "\\n[ \\r\\t]+"
+              "type": "SYMBOL",
+              "name": "flag"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "flag"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "FIELD",
-              "name": "account",
-              "content": {
-                "type": "SYMBOL",
-                "name": "account"
-              }
+              "type": "BLANK"
             }
           ]
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "\\n[ \\r\\t]+"
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "flag"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            },
-            {
-              "type": "FIELD",
-              "name": "account",
-              "content": {
+          "type": "FIELD",
+          "name": "account",
+          "content": {
+            "type": "SYMBOL",
+            "name": "account"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "amount",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SYMBOL",
-                "name": "account"
+                "name": "incomplete_amount"
+              },
+              {
+                "type": "BLANK"
               }
-            },
-            {
-              "type": "FIELD",
-              "name": "amount",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "incomplete_amount"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+            ]
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "cost_spec",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "cost_spec"
+              },
+              {
+                "type": "BLANK"
               }
-            },
-            {
-              "type": "FIELD",
-              "name": "cost_spec",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "cost_spec"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+            ]
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "price_annotation",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "price_annotation"
+              },
+              {
+                "type": "BLANK"
               }
-            },
-            {
-              "type": "FIELD",
-              "name": "price_annotation",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "price_annotation"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            }
-          ]
+            ]
+          }
         }
       ]
     },
     "postings": {
       "type": "REPEAT1",
       "content": {
-        "type": "SYMBOL",
-        "name": "posting"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "posting"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "metadata"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "\\n[ \\r\\t]+"
+              },
+              {
+                "type": "PATTERN",
+                "value": ";.*"
+              }
+            ]
+          }
+        ]
       }
     },
     "transaction": {
@@ -677,8 +787,16 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "string"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "string"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
               },
               {
                 "type": "CHOICE",
@@ -701,19 +819,25 @@
           "content": {
             "type": "REPEAT",
             "content": {
-              "type": "SYMBOL",
-              "name": "_tag_or_link"
-            }
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "metadata",
-          "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "key_value_line"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "\\n[ \\r\\t]+"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_tag_or_link"
+                }
+              ]
             }
           }
         },
@@ -985,6 +1109,17 @@
           "content": {
             "type": "SYMBOL",
             "name": "string"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "tags_and_links",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_tag_or_link"
+            }
           }
         },
         {

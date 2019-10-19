@@ -9,6 +9,7 @@ const EOL = /\n/;
 const KEY = /[a-z][a-zA-Z0-9\-_]+:/;
 const TAG = /#[A-Za-z0-9\-_/.]+/;
 const LINK = /\^[A-Za-z0-9\-_/.]+/;
+const COMMENT = /;.*/;
 
 // the preceding newline is part of the indent token.
 const INDENT = /\n[ \r\t]+/;
@@ -62,7 +63,14 @@ const posting = {
       seq("{", optional($.cost_comp_list), "}"),
       seq("{{", optional($.cost_comp_list), "}}"),
     ),
-  cost_comp_list: $ => "TODO",
+  cost_comp_list: $ => seq($.cost_comp, repeat(seq(",", $.cost_comp))),
+  cost_comp: $ => choice($.compound_amount, $.date, $.string, "*"),
+  compound_amount: $ =>
+    choice(
+      seq(optional($._num_expr), $.currency),
+      seq($._num_expr, optional($.currency)),
+      seq(optional($._num_expr), "#", optional($._num_expr), $.currency),
+    ),
   incomplete_amount: $ =>
     choice(
       seq($._num_expr, optional($.currency)),
@@ -74,18 +82,16 @@ const posting = {
       seq("@", optional($.incomplete_amount)),
     ),
   posting: $ =>
-    choice(
-      seq(INDENT, optional($.flag), field("account", $.account)),
-      seq(
-        INDENT,
-        optional($.flag),
-        field("account", $.account),
-        field("amount", optional($.incomplete_amount)),
-        field("cost_spec", optional($.cost_spec)),
-        field("price_annotation", optional($.price_annotation)),
-      ),
+    seq(
+      INDENT,
+      optional($.flag),
+      field("account", $.account),
+      field("amount", optional($.incomplete_amount)),
+      field("cost_spec", optional($.cost_spec)),
+      field("price_annotation", optional($.price_annotation)),
     ),
-  postings: $ => repeat1($.posting),
+  // TODO: let postings have their own metadata
+  postings: $ => repeat1(choice($.posting, $.metadata, seq(INDENT, COMMENT))),
 };
 
 // A helper function to create dated directive rules
@@ -132,8 +138,7 @@ const metadata = {
       $.amount,
     ),
   key_value: $ => seq($.key, optional($.key_value_value)),
-  key_value_line: $ => seq(INDENT, $.key_value),
-  metadata: $ => repeat1($.key_value_line),
+  metadata: $ => prec.left(2, repeat1(seq(INDENT, $.key_value))),
 };
 
 module.exports = grammar({
@@ -145,9 +150,13 @@ module.exports = grammar({
       repeat(
         choice($._dated_directives, $._undated_directives, $._skipped_lines),
       ),
-    comment: $ => seq(/;.*/, EOL),
     _skipped_lines: $ =>
-      choice(seq($.flag, /.*/, EOL), seq(":", /.*/, EOL), EOL, $.comment),
+      choice(
+        seq($.flag, /.*/, EOL),
+        seq(":", /.*/, EOL),
+        EOL,
+        seq(COMMENT, EOL),
+      ),
     ...metadata,
     ...undated_directives,
     _dated_directives: $ =>
@@ -171,9 +180,8 @@ module.exports = grammar({
       seq(
         field("date", $.date),
         field("flag", $.flag),
-        field("txn_strings", seq($.string, optional($.string))),
-        field("tags_and_links", repeat($._tag_or_link)),
-        field("metadata", repeat($.key_value_line)),
+        field("txn_strings", seq(optional($.string), optional($.string))),
+        field("tags_and_links", repeat(seq(optional(INDENT), $._tag_or_link))),
         field("postings", $.postings),
         EOL,
       ),
@@ -201,6 +209,7 @@ module.exports = grammar({
         "document",
         field("account", $.account),
         field("filename", $.string),
+        field("tags_and_links", repeat($._tag_or_link)),
       ),
     event: $ =>
       datedDirective(

@@ -120,10 +120,6 @@
           "named": true
         },
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "commodity",
           "named": true
         },
@@ -258,11 +254,6 @@
     }
   },
   {
-    "type": "comment",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "commodity",
     "named": true,
     "fields": {
@@ -293,6 +284,71 @@
       "types": [
         {
           "type": "currency",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "compound_amount",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_num_expr",
+          "named": true
+        },
+        {
+          "type": "currency",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "unary_num_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "cost_comp",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "compound_amount",
+          "named": true
+        },
+        {
+          "type": "date",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "cost_comp_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cost_comp",
           "named": true
         }
       ]
@@ -445,6 +501,20 @@
             "named": true
           }
         ]
+      },
+      "tags_and_links": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "link",
+            "named": true
+          },
+          {
+            "type": "tag",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -556,21 +626,6 @@
     }
   },
   {
-    "type": "key_value_line",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "key_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "key_value_value",
     "named": true,
     "fields": {},
@@ -630,7 +685,7 @@
       "required": true,
       "types": [
         {
-          "type": "key_value_line",
+          "type": "key_value",
           "named": true
         }
       ]
@@ -909,6 +964,10 @@
       "required": true,
       "types": [
         {
+          "type": "metadata",
+          "named": true
+        },
+        {
           "type": "posting",
           "named": true
         }
@@ -1076,16 +1135,6 @@
           }
         ]
       },
-      "metadata": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "key_value_line",
-            "named": true
-          }
-        ]
-      },
       "postings": {
         "multiple": false,
         "required": true,
@@ -1112,7 +1161,7 @@
       },
       "txn_strings": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "string",
@@ -1194,8 +1243,16 @@
     "named": false
   },
   {
-    "type": "cost_comp_list",
-    "named": true
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "*",
+    "named": false
+  },
+  {
+    "type": "#",
+    "named": false
   },
   {
     "type": "@@",
@@ -1250,10 +1307,6 @@
     "named": false
   },
   {
-    "type": ",",
-    "named": false
-  },
-  {
     "type": "~",
     "named": false
   },
@@ -1271,10 +1324,6 @@
   },
   {
     "type": "+",
-    "named": false
-  },
-  {
-    "type": "*",
     "named": false
   },
   {

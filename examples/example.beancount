@@ -55,12 +55,16 @@ plugin "beancount.plugins.auto_accounts"
 
 2012-12-17 P "Payee" "Narration"
     ! Expenses:Food                  10.00 EUR
+    P Expenses:Food                  10.00 EUR
     Assets:Account1
 
 2012-12-17 * "Payee" "Narration" ^link1
+    #tag
     ! Expenses:Food                  10.00 EUR
+    ; asdf
     P Expenses:Food                  10.00 EUR
     * Expenses:Food                  10.00 EUR
+    postingmeta: "test"
     Assets:Account1
 
 2012-12-15 balance Assets:Account1   10.00 EUR
