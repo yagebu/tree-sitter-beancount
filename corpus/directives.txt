@@ -9,7 +9,7 @@ Commodity
 (beancount_file
  (commodity
   date: (date)
-  (currency)))
+  currency: (currency)))
 
 =====
 Close

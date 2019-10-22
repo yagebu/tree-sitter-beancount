@@ -16,7 +16,7 @@ Simple transactions
  (transaction
   date: (date)
   flag: (flag)
-  txn_strings: (string)
+  txn_strings: (txn_strings (string))
   postings:
   (postings
    (posting
@@ -28,7 +28,7 @@ Simple transactions
  (transaction
   date: (date)
   flag: (flag)
-  txn_strings: (string)
+  txn_strings: (txn_strings (string))
   postings:
   (postings
    (posting
@@ -55,7 +55,7 @@ Transaction
  (transaction
   date: (date)
   flag: (flag)
-  txn_strings: (string)
+  txn_strings: (txn_strings (string))
   postings:
   (postings
    (posting

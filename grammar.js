@@ -72,10 +72,7 @@ const posting = {
       seq(optional($._num_expr), "#", optional($._num_expr), $.currency),
     ),
   incomplete_amount: $ =>
-    choice(
-      seq($._num_expr, optional($.currency)),
-      seq(optional($._num_expr), $.currency),
-    ),
+    choice(seq($._num_expr, $.currency), seq($._num_expr), seq($.currency)),
   price_annotation: $ =>
     choice(
       seq("@@", optional($.incomplete_amount)),
@@ -84,14 +81,14 @@ const posting = {
   posting: $ =>
     seq(
       INDENT,
-      optional($.flag),
+      field("flag", optional($.flag)),
       field("account", $.account),
       field("amount", optional($.incomplete_amount)),
       field("cost_spec", optional($.cost_spec)),
       field("price_annotation", optional($.price_annotation)),
+      field("metadata", optional($.metadata)),
     ),
-  // TODO: let postings have their own metadata
-  postings: $ => repeat1(choice($.posting, $.metadata, seq(INDENT, COMMENT))),
+  postings: $ => repeat1(choice($.posting, seq(INDENT, COMMENT))),
 };
 
 // A helper function to create dated directive rules
@@ -126,7 +123,7 @@ const undated_directives = {
 };
 
 const metadata = {
-  key_value_value: $ =>
+  _key_value_value: $ =>
     choice(
       $.string,
       $.account,
@@ -137,13 +134,14 @@ const metadata = {
       $._num_expr,
       $.amount,
     ),
-  key_value: $ => seq($.key, optional($.key_value_value)),
-  metadata: $ => prec.left(2, repeat1(seq(INDENT, $.key_value))),
+  key_value: $ => seq($.key, optional($._key_value_value)),
+  metadata: $ => repeat1(seq(INDENT, $.key_value)),
 };
 
 module.exports = grammar({
   name: "beancount",
   extras: $ => [/[ \t\r]/],
+  conflicts: $ => [[$.posting], [$.metadata], [$.tags_and_links]],
 
   rules: {
     beancount_file: $ =>
@@ -176,12 +174,15 @@ module.exports = grammar({
       ),
     ...posting,
     /* Dated directives. */
+    tags_and_links: $ => repeat1(seq(optional(INDENT), $._tag_or_link)),
+    txn_strings: $ => seq($.string, optional($.string)),
     transaction: $ =>
       seq(
         field("date", $.date),
         field("flag", $.flag),
-        field("txn_strings", seq(optional($.string), optional($.string))),
-        field("tags_and_links", repeat(seq(optional(INDENT), $._tag_or_link))),
+        field("txn_strings", optional($.txn_strings)),
+        field("tags_and_links", optional($.tags_and_links)),
+        field("metadata", optional($.metadata)),
         field("postings", $.postings),
         EOL,
       ),
@@ -193,7 +194,8 @@ module.exports = grammar({
         field("amount", choice($.amount, $.amount_with_tolerance)),
       ),
     close: $ => datedDirective($, "close", field("account", $.account)),
-    commodity: $ => datedDirective($, "commodity", $.currency),
+    commodity: $ =>
+      datedDirective($, "commodity", field("currency", $.currency)),
     custom: $ =>
       datedDirective(
         $,
@@ -209,7 +211,7 @@ module.exports = grammar({
         "document",
         field("account", $.account),
         field("filename", $.string),
-        field("tags_and_links", repeat($._tag_or_link)),
+        field("tags_and_links", optional($.tags_and_links)),
       ),
     event: $ =>
       datedDirective(

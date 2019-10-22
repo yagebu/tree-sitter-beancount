@@ -257,6 +257,16 @@
     "type": "commodity",
     "named": true,
     "fields": {
+      "currency": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "currency",
+            "named": true
+          }
+        ]
+      },
       "date": {
         "multiple": false,
         "required": true,
@@ -277,16 +287,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "currency",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -507,11 +507,7 @@
         "required": false,
         "types": [
           {
-            "type": "link",
-            "named": true
-          },
-          {
-            "type": "tag",
+            "type": "tags_and_links",
             "named": true
           }
         ]
@@ -615,25 +611,6 @@
       "required": true,
       "types": [
         {
-          "type": "key",
-          "named": true
-        },
-        {
-          "type": "key_value_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "key_value_value",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
           "type": "account",
           "named": true
         },
@@ -655,6 +632,10 @@
         },
         {
           "type": "date",
+          "named": true
+        },
+        {
+          "type": "key",
           "named": true
         },
         {
@@ -933,6 +914,26 @@
           }
         ]
       },
+      "flag": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "flag",
+            "named": true
+          }
+        ]
+      },
+      "metadata": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "metadata",
+            "named": true
+          }
+        ]
+      },
       "price_annotation": {
         "multiple": false,
         "required": false,
@@ -943,16 +944,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "flag",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -961,12 +952,8 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "metadata",
-          "named": true
-        },
         {
           "type": "posting",
           "named": true
@@ -1112,6 +1099,25 @@
     }
   },
   {
+    "type": "tags_and_links",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "link",
+          "named": true
+        },
+        {
+          "type": "tag",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "transaction",
     "named": true,
     "fields": {
@@ -1135,6 +1141,16 @@
           }
         ]
       },
+      "metadata": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "metadata",
+            "named": true
+          }
+        ]
+      },
       "postings": {
         "multiple": false,
         "required": true,
@@ -1150,25 +1166,36 @@
         "required": false,
         "types": [
           {
-            "type": "link",
-            "named": true
-          },
-          {
-            "type": "tag",
+            "type": "tags_and_links",
             "named": true
           }
         ]
       },
       "txn_strings": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "string",
+            "type": "txn_strings",
             "named": true
           }
         ]
       }
+    }
+  },
+  {
+    "type": "txn_strings",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1195,119 +1222,7 @@
     }
   },
   {
-    "type": ":",
-    "named": false
-  },
-  {
-    "type": "include",
-    "named": false
-  },
-  {
-    "type": "option",
-    "named": false
-  },
-  {
-    "type": "plugin",
-    "named": false
-  },
-  {
-    "type": "pushtag",
-    "named": false
-  },
-  {
-    "type": "poptag",
-    "named": false
-  },
-  {
-    "type": "pushmeta",
-    "named": false
-  },
-  {
-    "type": "popmeta",
-    "named": false
-  },
-  {
-    "type": "{",
-    "named": false
-  },
-  {
-    "type": "}",
-    "named": false
-  },
-  {
-    "type": "{{",
-    "named": false
-  },
-  {
-    "type": "}}",
-    "named": false
-  },
-  {
-    "type": ",",
-    "named": false
-  },
-  {
-    "type": "*",
-    "named": false
-  },
-  {
     "type": "#",
-    "named": false
-  },
-  {
-    "type": "@@",
-    "named": false
-  },
-  {
-    "type": "@",
-    "named": false
-  },
-  {
-    "type": "balance",
-    "named": false
-  },
-  {
-    "type": "close",
-    "named": false
-  },
-  {
-    "type": "commodity",
-    "named": false
-  },
-  {
-    "type": "custom",
-    "named": false
-  },
-  {
-    "type": "document",
-    "named": false
-  },
-  {
-    "type": "event",
-    "named": false
-  },
-  {
-    "type": "note",
-    "named": false
-  },
-  {
-    "type": "open",
-    "named": false
-  },
-  {
-    "type": "pad",
-    "named": false
-  },
-  {
-    "type": "price",
-    "named": false
-  },
-  {
-    "type": "query",
-    "named": false
-  },
-  {
-    "type": "~",
     "named": false
   },
   {
@@ -1319,7 +1234,7 @@
     "named": false
   },
   {
-    "type": "-",
+    "type": "*",
     "named": false
   },
   {
@@ -1327,7 +1242,35 @@
     "named": false
   },
   {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
     "type": "/",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "@",
+    "named": false
+  },
+  {
+    "type": "@@",
+    "named": false
+  },
+  {
+    "type": "account",
+    "named": true
+  },
+  {
+    "type": "balance",
     "named": false
   },
   {
@@ -1335,15 +1278,43 @@
     "named": true
   },
   {
+    "type": "close",
+    "named": false
+  },
+  {
+    "type": "commodity",
+    "named": false
+  },
+  {
+    "type": "currency",
+    "named": true
+  },
+  {
+    "type": "custom",
+    "named": false
+  },
+  {
     "type": "date",
     "named": true
   },
   {
-    "type": "key",
+    "type": "document",
+    "named": false
+  },
+  {
+    "type": "event",
+    "named": false
+  },
+  {
+    "type": "flag",
     "named": true
   },
   {
-    "type": "tag",
+    "type": "include",
+    "named": false
+  },
+  {
+    "type": "key",
     "named": true
   },
   {
@@ -1351,23 +1322,79 @@
     "named": true
   },
   {
-    "type": "string",
-    "named": true
-  },
-  {
-    "type": "currency",
-    "named": true
+    "type": "note",
+    "named": false
   },
   {
     "type": "number",
     "named": true
   },
   {
-    "type": "flag",
+    "type": "open",
+    "named": false
+  },
+  {
+    "type": "option",
+    "named": false
+  },
+  {
+    "type": "pad",
+    "named": false
+  },
+  {
+    "type": "plugin",
+    "named": false
+  },
+  {
+    "type": "popmeta",
+    "named": false
+  },
+  {
+    "type": "poptag",
+    "named": false
+  },
+  {
+    "type": "price",
+    "named": false
+  },
+  {
+    "type": "pushmeta",
+    "named": false
+  },
+  {
+    "type": "pushtag",
+    "named": false
+  },
+  {
+    "type": "query",
+    "named": false
+  },
+  {
+    "type": "string",
     "named": true
   },
   {
-    "type": "account",
+    "type": "tag",
     "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "{{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
+  },
+  {
+    "type": "}}",
+    "named": false
+  },
+  {
+    "type": "~",
+    "named": false
   }
 ]

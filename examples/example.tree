@@ -1,4 +1,4 @@
-(beancount_file [0, 0] - [82, 0]
+(beancount_file [0, 0] - [89, 0]
   (option [0, 0] - [1, 0]
     (string [0, 7] - [0, 14])
     (string [0, 15] - [0, 30]))
@@ -10,8 +10,9 @@
   (transaction [4, 0] - [34, 0]
     date: (date [4, 0] - [4, 10])
     flag: (flag [4, 11] - [4, 12])
-    txn_strings: (string [4, 13] - [4, 20])
-    txn_strings: (string [4, 21] - [4, 70])
+    txn_strings: (txn_strings [4, 13] - [4, 70]
+      (string [4, 13] - [4, 20])
+      (string [4, 21] - [4, 70]))
     postings: (postings [4, 70] - [33, 19]
       (posting [4, 70] - [5, 46]
         account: (account [5, 4] - [5, 19])
@@ -177,14 +178,14 @@
   (transaction [41, 0] - [45, 0]
     date: (date [41, 0] - [41, 10])
     flag: (flag [41, 11] - [41, 12])
-    txn_strings: (string [41, 13] - [41, 20])
-    txn_strings: (string [41, 21] - [41, 32])
-    postings: (postings [41, 32] - [44, 46]
-      (metadata [41, 32] - [42, 24]
-        (key_value [42, 4] - [42, 24]
-          (key [42, 4] - [42, 13])
-          (key_value_value [42, 14] - [42, 24]
-            (string [42, 14] - [42, 24]))))
+    txn_strings: (txn_strings [41, 13] - [41, 32]
+      (string [41, 13] - [41, 20])
+      (string [41, 21] - [41, 32]))
+    metadata: (metadata [41, 32] - [42, 24]
+      (key_value [42, 4] - [42, 24]
+        (key [42, 4] - [42, 13])
+        (string [42, 14] - [42, 24])))
+    postings: (postings [42, 24] - [44, 46]
       (posting [42, 24] - [43, 46]
         account: (account [43, 4] - [43, 17])
         amount: (incomplete_amount [43, 37] - [43, 46]
@@ -199,11 +200,12 @@
   (transaction [46, 0] - [49, 0]
     date: (date [46, 0] - [46, 10])
     flag: (flag [46, 11] - [46, 12])
-    txn_strings: (string [46, 13] - [46, 20])
-    txn_strings: (string [46, 21] - [46, 32])
+    txn_strings: (txn_strings [46, 13] - [46, 32]
+      (string [46, 13] - [46, 20])
+      (string [46, 21] - [46, 32]))
     postings: (postings [46, 32] - [48, 46]
       (posting [46, 32] - [47, 46]
-        (flag [47, 4] - [47, 5])
+        flag: (flag [47, 4] - [47, 5])
         account: (account [47, 6] - [47, 19])
         amount: (incomplete_amount [47, 37] - [47, 46]
           (number [47, 37] - [47, 42])
@@ -217,11 +219,12 @@
   (transaction [50, 0] - [54, 0]
     date: (date [50, 0] - [50, 10])
     flag: (flag [50, 11] - [50, 12])
-    txn_strings: (string [50, 13] - [50, 20])
-    txn_strings: (string [50, 21] - [50, 32])
+    txn_strings: (txn_strings [50, 13] - [50, 32]
+      (string [50, 13] - [50, 20])
+      (string [50, 21] - [50, 32]))
     postings: (postings [50, 32] - [53, 19]
       (posting [50, 32] - [51, 46]
-        (flag [51, 4] - [51, 5])
+        flag: (flag [51, 4] - [51, 5])
         account: (account [51, 6] - [51, 19])
         amount: (incomplete_amount [51, 37] - [51, 46]
           (number [51, 37] - [51, 42])
@@ -236,17 +239,18 @@
   (transaction [55, 0] - [59, 0]
     date: (date [55, 0] - [55, 10])
     flag: (flag [55, 11] - [55, 12])
-    txn_strings: (string [55, 13] - [55, 20])
-    txn_strings: (string [55, 21] - [55, 32])
+    txn_strings: (txn_strings [55, 13] - [55, 32]
+      (string [55, 13] - [55, 20])
+      (string [55, 21] - [55, 32]))
     postings: (postings [55, 32] - [58, 19]
       (posting [55, 32] - [56, 46]
-        (flag [56, 4] - [56, 5])
+        flag: (flag [56, 4] - [56, 5])
         account: (account [56, 6] - [56, 19])
         amount: (incomplete_amount [56, 37] - [56, 46]
           (number [56, 37] - [56, 42])
           (currency [56, 43] - [56, 46])))
       (posting [56, 46] - [57, 46]
-        (flag [57, 4] - [57, 5])
+        flag: (flag [57, 4] - [57, 5])
         account: (account [57, 6] - [57, 19])
         amount: (incomplete_amount [57, 37] - [57, 46]
           (number [57, 37] - [57, 42])
@@ -256,33 +260,34 @@
   (transaction [60, 0] - [68, 0]
     date: (date [60, 0] - [60, 10])
     flag: (flag [60, 11] - [60, 12])
-    txn_strings: (string [60, 13] - [60, 20])
-    txn_strings: (string [60, 21] - [60, 32])
-    tags_and_links: (link [60, 33] - [60, 39])
-    tags_and_links: (tag [61, 4] - [61, 8])
+    txn_strings: (txn_strings [60, 13] - [60, 32]
+      (string [60, 13] - [60, 20])
+      (string [60, 21] - [60, 32]))
+    tags_and_links: (tags_and_links [60, 33] - [61, 8]
+      (link [60, 33] - [60, 39])
+      (tag [61, 4] - [61, 8]))
     postings: (postings [61, 8] - [67, 19]
       (posting [61, 8] - [62, 46]
-        (flag [62, 4] - [62, 5])
+        flag: (flag [62, 4] - [62, 5])
         account: (account [62, 6] - [62, 19])
         amount: (incomplete_amount [62, 37] - [62, 46]
           (number [62, 37] - [62, 42])
           (currency [62, 43] - [62, 46])))
       (posting [63, 10] - [64, 46]
-        (flag [64, 4] - [64, 5])
+        flag: (flag [64, 4] - [64, 5])
         account: (account [64, 6] - [64, 19])
         amount: (incomplete_amount [64, 37] - [64, 46]
           (number [64, 37] - [64, 42])
           (currency [64, 43] - [64, 46])))
-      (posting [64, 46] - [65, 46]
-        (flag [65, 4] - [65, 5])
+      (posting [64, 46] - [66, 23]
+        flag: (flag [65, 4] - [65, 5])
         account: (account [65, 6] - [65, 19])
         amount: (incomplete_amount [65, 37] - [65, 46]
           (number [65, 37] - [65, 42])
-          (currency [65, 43] - [65, 46])))
-      (metadata [65, 46] - [66, 23]
-        (key_value [66, 4] - [66, 23]
-          (key [66, 4] - [66, 16])
-          (key_value_value [66, 17] - [66, 23]
+          (currency [65, 43] - [65, 46]))
+        metadata: (metadata [65, 46] - [66, 23]
+          (key_value [66, 4] - [66, 23]
+            (key [66, 4] - [66, 16])
             (string [66, 17] - [66, 23]))))
       (posting [66, 23] - [67, 19]
         account: (account [67, 4] - [67, 19]))))
@@ -303,27 +308,52 @@
     metadata: (metadata [73, 50] - [76, 26]
       (key_value [74, 4] - [74, 17]
         (key [74, 4] - [74, 9])
-        (key_value_value [74, 10] - [74, 17]
-          (string [74, 10] - [74, 17])))
+        (string [74, 10] - [74, 17]))
       (key_value [75, 4] - [75, 14]
         (key [75, 4] - [75, 9])
-        (key_value_value [75, 10] - [75, 14]
-          (bool [75, 10] - [75, 14])))
+        (bool [75, 10] - [75, 14]))
       (key_value [76, 4] - [76, 26]
         (key [76, 4] - [76, 12])
-        (key_value_value [76, 13] - [76, 26]
-          (account [76, 13] - [76, 26])))))
+        (account [76, 13] - [76, 26]))))
   (document [78, 0] - [79, 0]
     date: (date [78, 0] - [78, 10])
     account: (account [78, 20] - [78, 33])
     filename: (string [78, 34] - [78, 46])
-    tags_and_links: (tag [78, 47] - [78, 51])
-    tags_and_links: (link [78, 52] - [78, 58]))
+    tags_and_links: (tags_and_links [78, 47] - [78, 58]
+      (tag [78, 47] - [78, 51])
+      (link [78, 52] - [78, 58])))
   (document [79, 0] - [80, 0]
     date: (date [79, 0] - [79, 10])
     account: (account [79, 20] - [79, 33])
     filename: (string [79, 34] - [79, 47])
-    tags_and_links: (tag [79, 48] - [79, 59]))
+    tags_and_links: (tags_and_links [79, 48] - [79, 59]
+      (tag [79, 48] - [79, 59])))
   (close [81, 0] - [82, 0]
     date: (date [81, 0] - [81, 10])
-    account: (account [81, 17] - [81, 32])))
+    account: (account [81, 17] - [81, 32]))
+  (transaction [83, 0] - [89, 0]
+    date: (date [83, 0] - [83, 10])
+    flag: (flag [83, 11] - [83, 12])
+    txn_strings: (txn_strings [83, 13] - [83, 32]
+      (string [83, 13] - [83, 20])
+      (string [83, 21] - [83, 32]))
+    metadata: (metadata [83, 32] - [84, 24]
+      (key_value [84, 4] - [84, 24]
+        (key [84, 4] - [84, 13])
+        (string [84, 14] - [84, 24])))
+    postings: (postings [84, 24] - [88, 14]
+      (posting [84, 24] - [86, 24]
+        account: (account [85, 4] - [85, 17])
+        amount: (incomplete_amount [85, 37] - [85, 46]
+          (number [85, 37] - [85, 42])
+          (currency [85, 43] - [85, 46]))
+        metadata: (metadata [85, 46] - [86, 24]
+          (key_value [86, 4] - [86, 24]
+            (key [86, 4] - [86, 13])
+            (string [86, 14] - [86, 24]))))
+      (posting [86, 24] - [87, 46]
+        account: (account [87, 4] - [87, 19])
+        amount: (incomplete_amount [87, 36] - [87, 46]
+          (unary_num_expr [87, 36] - [87, 42]
+            (number [87, 37] - [87, 42]))
+          (currency [87, 43] - [87, 46]))))))
