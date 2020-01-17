@@ -1,7 +1,5 @@
 //token(seq(/\p{Lu}[0-9\-\p{L}]*/u, repeat1(/:[0-9\p{Lu}][0-9\-\p{L}]*/u)));
 
-// This differs from Beancount in allowing arbitrary lengths for currencies
-// the fixed length blew up the parser size.
 const CURRENCY = /[A-Z][A-Z0-9\'\._\-]{0,22}[A-Z0-9]/;
 const DATE = /[0-9]{4,}[\-/][0-9]+[\-/][0-9]+/;
 const NUMBER = /([0-9]+|[0-9][0-9,]+[0-9])(.[0-9]*)?/;
