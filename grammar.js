@@ -65,9 +65,20 @@ const posting = {
   cost_comp: $ => choice($.compound_amount, $.date, $.string, "*"),
   compound_amount: $ =>
     choice(
-      seq(optional($._num_expr), $.currency),
-      seq($._num_expr, optional($.currency)),
-      seq(optional($._num_expr), "#", optional($._num_expr), $.currency),
+      seq(
+        field("number_per", optional($._num_expr)),
+        field("currency", $.currency),
+      ),
+      seq(
+        field("number_per", $._num_expr),
+        field("currency", optional($.currency)),
+      ),
+      seq(
+        field("number_per", optional($._num_expr)),
+        "#",
+        field("number_total", optional($._num_expr)),
+        field("currency", $.currency),
+      ),
     ),
   incomplete_amount: $ =>
     choice(seq($._num_expr, $.currency), seq($._num_expr), seq($.currency)),

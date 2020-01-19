@@ -480,20 +480,28 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_num_expr"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "FIELD",
+              "name": "number_per",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_num_expr"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
             },
             {
-              "type": "SYMBOL",
-              "name": "currency"
+              "type": "FIELD",
+              "name": "currency",
+              "content": {
+                "type": "SYMBOL",
+                "name": "currency"
+              }
             }
           ]
         },
@@ -501,20 +509,28 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_num_expr"
+              "type": "FIELD",
+              "name": "number_per",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_num_expr"
+              }
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "currency"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "FIELD",
+              "name": "currency",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "currency"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -522,36 +538,48 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_num_expr"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "FIELD",
+              "name": "number_per",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_num_expr"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
             },
             {
               "type": "STRING",
               "value": "#"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_num_expr"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "FIELD",
+              "name": "number_total",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_num_expr"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
             },
             {
-              "type": "SYMBOL",
-              "name": "currency"
+              "type": "FIELD",
+              "name": "currency",
+              "content": {
+                "type": "SYMBOL",
+                "name": "currency"
+              }
             }
           ]
         }
