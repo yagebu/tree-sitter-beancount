@@ -209,12 +209,20 @@
           "value": "option"
         },
         {
-          "type": "SYMBOL",
-          "name": "string"
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
         },
         {
-          "type": "SYMBOL",
-          "name": "string"
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
         },
         {
           "type": "PATTERN",
@@ -230,20 +238,28 @@
           "value": "plugin"
         },
         {
-          "type": "SYMBOL",
-          "name": "string"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "string"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "FIELD",
+          "name": "config",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
         },
         {
           "type": "PATTERN",
@@ -259,8 +275,12 @@
           "value": "pushtag"
         },
         {
-          "type": "SYMBOL",
-          "name": "tag"
+          "type": "FIELD",
+          "name": "tag",
+          "content": {
+            "type": "SYMBOL",
+            "name": "tag"
+          }
         },
         {
           "type": "PATTERN",
@@ -276,8 +296,12 @@
           "value": "poptag"
         },
         {
-          "type": "SYMBOL",
-          "name": "tag"
+          "type": "FIELD",
+          "name": "tag",
+          "content": {
+            "type": "SYMBOL",
+            "name": "tag"
+          }
         },
         {
           "type": "PATTERN",
@@ -293,8 +317,12 @@
           "value": "pushmeta"
         },
         {
-          "type": "SYMBOL",
-          "name": "key_value"
+          "type": "FIELD",
+          "name": "key_value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "key_value"
+          }
         },
         {
           "type": "PATTERN",
@@ -310,8 +338,12 @@
           "value": "popmeta"
         },
         {
-          "type": "SYMBOL",
-          "name": "key"
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "key"
+          }
         },
         {
           "type": "PATTERN",
@@ -808,8 +840,17 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "_tag_or_link"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "tag"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "link"
+              }
+            ]
           }
         ]
       }
@@ -1811,19 +1852,6 @@
         "type": "PATTERN",
         "value": "\\^[A-Za-z0-9\\-_/.]+"
       }
-    },
-    "_tag_or_link": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "tag"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "link"
-        }
-      ]
     },
     "string": {
       "type": "TOKEN",

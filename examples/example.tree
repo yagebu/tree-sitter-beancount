@@ -1,12 +1,12 @@
 (beancount_file [0, 0] - [89, 0]
   (option [0, 0] - [1, 0]
-    (string [0, 7] - [0, 14])
-    (string [0, 15] - [0, 30]))
+    key: (string [0, 7] - [0, 14])
+    value: (string [0, 15] - [0, 30]))
   (option [1, 0] - [2, 0]
-    (string [1, 7] - [1, 27])
-    (string [1, 28] - [1, 33]))
+    key: (string [1, 7] - [1, 27])
+    value: (string [1, 28] - [1, 33]))
   (plugin [2, 0] - [3, 0]
-    (string [2, 7] - [2, 40]))
+    name: (string [2, 7] - [2, 40]))
   (transaction [4, 0] - [34, 0]
     date: (date [4, 0] - [4, 10])
     flag: (flag [4, 11] - [4, 12])

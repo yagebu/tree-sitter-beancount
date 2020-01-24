@@ -1,4 +1,6 @@
-//token(seq(/\p{Lu}[0-9\-\p{L}]*/u, repeat1(/:[0-9\p{Lu}][0-9\-\p{L}]*/u)));
+/**
+ * A tree-sitter grammar for Beancount
+ */
 
 const CURRENCY = /[A-Z][A-Z0-9\'\._\-]{0,22}[A-Z0-9]/;
 const DATE = /[0-9]{4,}[\-/][0-9]+[\-/][0-9]+/;
@@ -18,7 +20,6 @@ const tokens = {
   key: $ => token(KEY),
   tag: $ => token(TAG),
   link: $ => token(LINK),
-  _tag_or_link: $ => choice($.tag, $.link),
   string: $ => token(/"[^"]*"/),
   currency: $ => token(CURRENCY),
   number: $ => token(NUMBER),
@@ -38,6 +39,11 @@ const tokens = {
       ),
     ),
 };
+
+// TODO:
+// "Correct" UTF-8-aware token rule for accounts. Currently not feasible:
+// https://github.com/tree-sitter/tree-sitter/issues/464
+// token(seq(/\p{Lu}[0-9\-\p{L}]*/u, repeat1(/:[0-9\p{Lu}][0-9\-\p{L}]*/u)));
 
 /** Numerical expressions. */
 const number_expression = {
@@ -123,12 +129,19 @@ const undated_directives = {
       $.pushtag,
     ),
   include: $ => seq("include", $.string, EOL),
-  option: $ => seq("option", $.string, $.string, EOL),
-  plugin: $ => seq("plugin", $.string, optional($.string), EOL),
-  pushtag: $ => seq("pushtag", $.tag, EOL),
-  poptag: $ => seq("poptag", $.tag, EOL),
-  pushmeta: $ => seq("pushmeta", $.key_value, EOL),
-  popmeta: $ => seq("popmeta", $.key, EOL),
+  option: $ =>
+    seq("option", field("key", $.string), field("value", $.string), EOL),
+  plugin: $ =>
+    seq(
+      "plugin",
+      field("name", $.string),
+      field("config", optional($.string)),
+      EOL,
+    ),
+  pushtag: $ => seq("pushtag", field("tag", $.tag), EOL),
+  poptag: $ => seq("poptag", field("tag", $.tag), EOL),
+  pushmeta: $ => seq("pushmeta", field("key_value", $.key_value), EOL),
+  popmeta: $ => seq("popmeta", field("key", $.key), EOL),
 };
 
 const metadata = {
@@ -183,7 +196,7 @@ module.exports = grammar({
       ),
     ...posting,
     /* Dated directives. */
-    tags_and_links: $ => repeat1(seq(optional(INDENT), $._tag_or_link)),
+    tags_and_links: $ => repeat1(seq(optional(INDENT), choice($.tag, $.link))),
     txn_strings: $ => seq($.string, optional($.string)),
     transaction: $ =>
       seq(
