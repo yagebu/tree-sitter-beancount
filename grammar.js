@@ -15,16 +15,16 @@ const COMMENT = /;.*/;
 const INDENT = /\n[ \r\t]+/;
 
 const tokens = {
-  bool: $ => token(/TRUE|FALSE/),
-  date: $ => token(DATE),
-  key: $ => token(KEY),
-  tag: $ => token(TAG),
-  link: $ => token(LINK),
-  string: $ => token(/"[^"]*"/),
-  currency: $ => token(CURRENCY),
-  number: $ => token(NUMBER),
-  flag: $ => /[!&?%PSTCURM*#]/,
-  account: $ =>
+  bool: ($) => token(/TRUE|FALSE/),
+  date: ($) => token(DATE),
+  key: ($) => token(KEY),
+  tag: ($) => token(TAG),
+  link: ($) => token(LINK),
+  string: ($) => token(/"[^"]*"/),
+  currency: ($) => token(CURRENCY),
+  number: ($) => token(NUMBER),
+  flag: ($) => /[!&?%PSTCURM*#]/,
+  account: ($) =>
     token(
       seq(
         /[A-Z]|[^\x00-\x7F]/,
@@ -47,12 +47,12 @@ const tokens = {
 
 /** Numerical expressions. */
 const number_expression = {
-  _num_expr: $ =>
+  _num_expr: ($) =>
     choice($.number, $._paren_num_expr, $.unary_num_expr, $.binary_num_expr),
-  _paren_num_expr: $ => seq("(", $._num_expr, ")"),
-  unary_num_expr: $ =>
+  _paren_num_expr: ($) => seq("(", $._num_expr, ")"),
+  unary_num_expr: ($) =>
     prec(3, choice(seq("-", $._num_expr), seq("+", $._num_expr))),
-  binary_num_expr: $ =>
+  binary_num_expr: ($) =>
     choice(
       prec.left(2, seq($._num_expr, "*", $._num_expr)),
       prec.left(2, seq($._num_expr, "/", $._num_expr)),
@@ -62,14 +62,14 @@ const number_expression = {
 };
 
 const posting = {
-  cost_spec: $ =>
+  cost_spec: ($) =>
     choice(
       seq("{", optional($.cost_comp_list), "}"),
       seq("{{", optional($.cost_comp_list), "}}"),
     ),
-  cost_comp_list: $ => seq($.cost_comp, repeat(seq(",", $.cost_comp))),
-  cost_comp: $ => choice($.compound_amount, $.date, $.string, "*"),
-  compound_amount: $ =>
+  cost_comp_list: ($) => seq($.cost_comp, repeat(seq(",", $.cost_comp))),
+  cost_comp: ($) => choice($.compound_amount, $.date, $.string, "*"),
+  compound_amount: ($) =>
     choice(
       seq(
         field("number_per", optional($._num_expr)),
@@ -86,14 +86,14 @@ const posting = {
         field("currency", $.currency),
       ),
     ),
-  incomplete_amount: $ =>
+  incomplete_amount: ($) =>
     choice(seq($._num_expr, $.currency), seq($._num_expr), seq($.currency)),
-  price_annotation: $ =>
+  price_annotation: ($) =>
     choice(
       seq("@@", optional($.incomplete_amount)),
       seq("@", optional($.incomplete_amount)),
     ),
-  posting: $ =>
+  posting: ($) =>
     seq(
       INDENT,
       field("flag", optional($.flag)),
@@ -103,7 +103,7 @@ const posting = {
       field("price_annotation", optional($.price_annotation)),
       field("metadata", optional($.metadata)),
     ),
-  postings: $ => repeat1(choice($.posting, seq(INDENT, COMMENT))),
+  postings: ($) => repeat1(choice($.posting, seq(INDENT, COMMENT))),
 };
 
 // A helper function to create dated directive rules
@@ -118,7 +118,7 @@ const datedDirective = ($, name, ...fields) =>
   );
 
 const undated_directives = {
-  _undated_directives: $ =>
+  _undated_directives: ($) =>
     choice(
       $.include,
       $.option,
@@ -128,24 +128,24 @@ const undated_directives = {
       $.pushmeta,
       $.pushtag,
     ),
-  include: $ => seq("include", $.string, EOL),
-  option: $ =>
+  include: ($) => seq("include", $.string, EOL),
+  option: ($) =>
     seq("option", field("key", $.string), field("value", $.string), EOL),
-  plugin: $ =>
+  plugin: ($) =>
     seq(
       "plugin",
       field("name", $.string),
       field("config", optional($.string)),
       EOL,
     ),
-  pushtag: $ => seq("pushtag", field("tag", $.tag), EOL),
-  poptag: $ => seq("poptag", field("tag", $.tag), EOL),
-  pushmeta: $ => seq("pushmeta", field("key_value", $.key_value), EOL),
-  popmeta: $ => seq("popmeta", field("key", $.key), EOL),
+  pushtag: ($) => seq("pushtag", field("tag", $.tag), EOL),
+  poptag: ($) => seq("poptag", field("tag", $.tag), EOL),
+  pushmeta: ($) => seq("pushmeta", field("key_value", $.key_value), EOL),
+  popmeta: ($) => seq("popmeta", field("key", $.key), EOL),
 };
 
 const metadata = {
-  _key_value_value: $ =>
+  _key_value_value: ($) =>
     choice(
       $.string,
       $.account,
@@ -156,21 +156,21 @@ const metadata = {
       $._num_expr,
       $.amount,
     ),
-  key_value: $ => seq($.key, optional($._key_value_value)),
-  metadata: $ => repeat1(seq(INDENT, $.key_value)),
+  key_value: ($) => seq($.key, optional($._key_value_value)),
+  metadata: ($) => repeat1(seq(INDENT, $.key_value)),
 };
 
 module.exports = grammar({
   name: "beancount",
-  extras: $ => [/[ \t\r]/],
-  conflicts: $ => [[$.posting], [$.metadata], [$.tags_and_links]],
+  extras: ($) => [/[ \t\r]/],
+  conflicts: ($) => [[$.posting], [$.metadata], [$.tags_and_links]],
 
   rules: {
-    beancount_file: $ =>
+    beancount_file: ($) =>
       repeat(
         choice($._dated_directives, $._undated_directives, $._skipped_lines),
       ),
-    _skipped_lines: $ =>
+    _skipped_lines: ($) =>
       choice(
         seq($.flag, /.*/, EOL),
         seq(":", /.*/, EOL),
@@ -179,7 +179,7 @@ module.exports = grammar({
       ),
     ...metadata,
     ...undated_directives,
-    _dated_directives: $ =>
+    _dated_directives: ($) =>
       choice(
         $.balance,
         $.close,
@@ -196,9 +196,10 @@ module.exports = grammar({
       ),
     ...posting,
     /* Dated directives. */
-    tags_and_links: $ => repeat1(seq(optional(INDENT), choice($.tag, $.link))),
-    txn_strings: $ => seq($.string, optional($.string)),
-    transaction: $ =>
+    tags_and_links: ($) =>
+      repeat1(seq(optional(INDENT), choice($.tag, $.link))),
+    txn_strings: ($) => seq($.string, optional($.string)),
+    transaction: ($) =>
       seq(
         field("date", $.date),
         field("flag", $.flag),
@@ -208,17 +209,17 @@ module.exports = grammar({
         field("postings", $.postings),
         EOL,
       ),
-    balance: $ =>
+    balance: ($) =>
       datedDirective(
         $,
         "balance",
         field("account", $.account),
         field("amount", choice($.amount, $.amount_with_tolerance)),
       ),
-    close: $ => datedDirective($, "close", field("account", $.account)),
-    commodity: $ =>
+    close: ($) => datedDirective($, "close", field("account", $.account)),
+    commodity: ($) =>
       datedDirective($, "commodity", field("currency", $.currency)),
-    custom: $ =>
+    custom: ($) =>
       datedDirective(
         $,
         "custom",
@@ -227,7 +228,7 @@ module.exports = grammar({
           choice($.string, $.date, $.account, $.bool, $.amount, $._num_expr),
         ),
       ),
-    document: $ =>
+    document: ($) =>
       datedDirective(
         $,
         "document",
@@ -235,21 +236,21 @@ module.exports = grammar({
         field("filename", $.string),
         field("tags_and_links", optional($.tags_and_links)),
       ),
-    event: $ =>
+    event: ($) =>
       datedDirective(
         $,
         "event",
         field("type", $.string),
         field("description", $.string),
       ),
-    note: $ =>
+    note: ($) =>
       datedDirective(
         $,
         "note",
         field("account", $.account),
         field("note", $.string),
       ),
-    open: $ =>
+    open: ($) =>
       datedDirective(
         $,
         "open",
@@ -257,21 +258,21 @@ module.exports = grammar({
         field("currencies", optional($.currency_list)),
         field("booking", optional($.string)),
       ),
-    pad: $ =>
+    pad: ($) =>
       datedDirective(
         $,
         "pad",
         field("account", $.account),
         field("from_account", $.account),
       ),
-    price: $ =>
+    price: ($) =>
       datedDirective(
         $,
         "price",
         field("currency", $.currency),
         field("amount", $.amount),
       ),
-    query: $ =>
+    query: ($) =>
       datedDirective(
         $,
         "query",
@@ -279,10 +280,11 @@ module.exports = grammar({
         field("query", $.string),
       ),
 
-    currency_list: $ => seq($.currency, repeat(seq(",", $.currency))),
+    currency_list: ($) => seq($.currency, repeat(seq(",", $.currency))),
 
-    amount: $ => seq($._num_expr, $.currency),
-    amount_with_tolerance: $ => seq($._num_expr, "~", $._num_expr, $.currency),
+    amount: ($) => seq($._num_expr, $.currency),
+    amount_with_tolerance: ($) =>
+      seq($._num_expr, "~", $._num_expr, $.currency),
     ...number_expression,
     ...tokens,
   },
