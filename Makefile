@@ -10,5 +10,6 @@ default:
 update:
 	./node_modules/.bin/tree-sitter parse examples/example.beancount > examples/example.tree
 
+.PHONY: lint
 lint:
 	npm run lint
