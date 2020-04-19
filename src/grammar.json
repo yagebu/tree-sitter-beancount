@@ -28,8 +28,8 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "flag"
+              "type": "PATTERN",
+              "value": "[!&?%PSTCURM*#]"
             },
             {
               "type": "PATTERN",
@@ -1895,8 +1895,11 @@
       }
     },
     "flag": {
-      "type": "PATTERN",
-      "value": "[!&?%PSTCURM*#]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[!&?%PSTCURM*#]"
+      }
     },
     "account": {
       "type": "TOKEN",

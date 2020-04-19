@@ -136,10 +136,6 @@
           "named": true
         },
         {
-          "type": "flag",
-          "named": true
-        },
-        {
           "type": "include",
           "named": true
         },
@@ -601,6 +597,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "flag",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "include",
@@ -1372,10 +1373,6 @@
   {
     "type": "event",
     "named": false
-  },
-  {
-    "type": "flag",
-    "named": true
   },
   {
     "type": "include",

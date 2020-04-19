@@ -10,6 +10,7 @@ const KEY = /[a-z][a-zA-Z0-9\-_]+:/;
 const TAG = /#[A-Za-z0-9\-_/.]+/;
 const LINK = /\^[A-Za-z0-9\-_/.]+/;
 const COMMENT = /;.*/;
+const FLAG = /[!&?%PSTCURM*#]/;
 
 // the preceding newline is part of the indent token.
 const INDENT = /\n[ \r\t]+/;
@@ -23,7 +24,7 @@ const tokens = {
   string: ($) => token(/"[^"]*"/),
   currency: ($) => token(CURRENCY),
   number: ($) => token(NUMBER),
-  flag: ($) => /[!&?%PSTCURM*#]/,
+  flag: ($) => token(FLAG),
   account: ($) =>
     token(
       seq(
@@ -172,12 +173,7 @@ module.exports = grammar({
         choice($._dated_directives, $._undated_directives, $._skipped_lines),
       ),
     _skipped_lines: ($) =>
-      choice(
-        seq($.flag, /.*/, EOL),
-        seq(":", /.*/, EOL),
-        EOL,
-        seq(COMMENT, EOL),
-      ),
+      choice(seq(FLAG, /.*/, EOL), seq(":", /.*/, EOL), EOL, seq(COMMENT, EOL)),
     ...metadata,
     ...undated_directives,
     _dated_directives: ($) =>
