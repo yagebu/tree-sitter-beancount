@@ -398,16 +398,17 @@
   {
     "type": "cost_spec",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "cost_comp_list",
-          "named": true
-        }
-      ]
+    "fields": {
+      "cost_comp_list": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "cost_comp_list",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

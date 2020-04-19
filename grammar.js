@@ -64,8 +64,8 @@ const number_expression = {
 const posting = {
   cost_spec: ($) =>
     choice(
-      seq("{", optional($.cost_comp_list), "}"),
-      seq("{{", optional($.cost_comp_list), "}}"),
+      seq("{", field("cost_comp_list", optional($.cost_comp_list)), "}"),
+      seq("{{", field("cost_comp_list", optional($.cost_comp_list)), "}}"),
     ),
   cost_comp_list: ($) => seq($.cost_comp, repeat(seq(",", $.cost_comp))),
   cost_comp: ($) => choice($.compound_amount, $.date, $.string, "*"),
