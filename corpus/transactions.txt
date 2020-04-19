@@ -10,6 +10,10 @@ Simple transactions
     Assets:Test  30.00 EUR
     Assets:Test
 
+2012-12-12 * "asdf"
+    Assets:Test  30.00 EUR
+    Assets:Test   ; comment in posting line
+
 ---
 
 (beancount_file
@@ -25,6 +29,17 @@ Simple transactions
    (posting
     account: (account)
     amount: (incomplete_amount (unary_num_expr (number)) (currency)))))
+ (transaction
+  date: (date)
+  flag: (flag)
+  txn_strings: (txn_strings (string))
+  postings:
+  (postings
+   (posting
+    account: (account)
+    amount: (incomplete_amount (number) (currency)))
+   (posting
+    account: (account))))
  (transaction
   date: (date)
   flag: (flag)

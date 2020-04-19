@@ -101,6 +101,7 @@ const posting = {
       field("amount", optional($.incomplete_amount)),
       field("cost_spec", optional($.cost_spec)),
       field("price_annotation", optional($.price_annotation)),
+      optional(COMMENT),
       field("metadata", optional($.metadata)),
     ),
   postings: ($) => repeat1(choice($.posting, seq(INDENT, COMMENT))),
