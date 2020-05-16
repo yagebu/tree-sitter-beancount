@@ -1,0 +1,49 @@
+=====
+Balance with some comment lines
+=====
+
+; this is a comment
+* this also
+2012-12-12 balance Assets:Test 50.00 EUR
+
+; one more comment
+
+---
+
+(beancount_file
+ (balance
+  date: (date)
+  account: (account)
+  amount: (amount
+      (number)
+      (currency))))
+
+=====
+Transaction with some comment lines
+=====
+
+; this is a comment
+* this also
+
+2012-12-12 * "asdf"
+    ; one more comment
+    Assets:Test  30.00 EUR
+    ; inline comment
+    Assets:Test  -30.00 USD
+; one more comment
+
+---
+
+(beancount_file
+ (transaction
+  date: (date)
+  flag: (flag)
+  txn_strings: (txn_strings (string))
+  postings:
+  (postings
+   (posting
+    account: (account)
+    amount: (incomplete_amount (number) (currency)))
+   (posting
+    account: (account)
+    amount: (incomplete_amount (unary_num_expr (number)) (currency))))))
