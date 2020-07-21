@@ -14,7 +14,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "prettier": "^2.0.4",
-    "tree-sitter-cli": "^0.16.7"
+    "prettier": "^2.0.5",
+    "tree-sitter-cli": "^0.16.9"
   }
 }
