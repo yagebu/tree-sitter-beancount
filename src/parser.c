@@ -5,7 +5,7 @@
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
-#define LANGUAGE_VERSION 11
+#define LANGUAGE_VERSION 12
 #define STATE_COUNT 300
 #define LARGE_STATE_COUNT 2
 #define SYMBOL_COUNT 100
@@ -1327,6 +1327,10 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
 
 static TSSymbol ts_alias_sequences[100][MAX_ALIAS_SEQUENCE_LENGTH] = {
   [0] = {0},
+};
+
+static uint16_t ts_non_terminal_alias_map[] = {
+  0,
 };
 
 static bool ts_lex(TSLexer *lexer, TSStateId state) {
@@ -7523,6 +7527,8 @@ extern const TSLanguage *tree_sitter_beancount(void) {
     .alias_count = ALIAS_COUNT,
     .token_count = TOKEN_COUNT,
     .large_state_count = LARGE_STATE_COUNT,
+    .alias_map = ts_non_terminal_alias_map,
+    .state_count = STATE_COUNT,
     .symbol_metadata = ts_symbol_metadata,
     .parse_table = (const unsigned short *)ts_parse_table,
     .small_parse_table = (const uint16_t *)ts_small_parse_table,
