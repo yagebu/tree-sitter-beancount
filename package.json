@@ -2,7 +2,7 @@
   "name": "tree-sitter-beancount",
   "version": "0.0.1",
   "description": "tree-sitter grammar for Beancount",
-  "main": "index.js",
+  "main": "bindings/node",
   "scripts": {
     "lint": "prettier grammar.js --write",
     "generate": "tree-sitter generate",
@@ -15,6 +15,6 @@
   },
   "devDependencies": {
     "prettier": "^2.2.1",
-    "tree-sitter-cli": "^0.18.0"
+    "tree-sitter-cli": "^0.20.0"
   }
 }
