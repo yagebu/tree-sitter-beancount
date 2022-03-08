@@ -3,8 +3,8 @@
  */
 
 const CURRENCY = /[A-Z][A-Z0-9\'\._\-]{0,22}[A-Z0-9]/;
-const DATE = /[0-9]{4,}[\-/][0-9]+[\-/][0-9]+/;
-const NUMBER = /([0-9]+|[0-9][0-9,]+[0-9])(.[0-9]*)?/;
+const DATE = /[0-9]{4,}[\-/][0-9]{2,}[\-/][0-9]{2,}/;
+const NUMBER = /([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/;
 const EOL = /\n/;
 const KEY = /[a-z][a-zA-Z0-9\-_]+:/;
 const TAG = /#[A-Za-z0-9\-_/.]+/;
@@ -48,9 +48,12 @@ const tokens = {
 
 /** Numerical expressions. */
 const number_expression = {
+  // Since this is hidden in the syntax trees, we need to ensure that it
+  // always consists of one node. Otherwise, accessing the children by index
+  // cannot work.
   _num_expr: ($) =>
-    choice($.number, $._paren_num_expr, $.unary_num_expr, $.binary_num_expr),
-  _paren_num_expr: ($) => seq("(", $._num_expr, ")"),
+    choice($.number, $.paren_num_expr, $.unary_num_expr, $.binary_num_expr),
+  paren_num_expr: ($) => seq("(", $._num_expr, ")"),
   unary_num_expr: ($) =>
     prec(3, choice(seq("-", $._num_expr), seq("+", $._num_expr))),
   binary_num_expr: ($) =>
@@ -279,9 +282,15 @@ module.exports = grammar({
 
     currency_list: ($) => seq($.currency, repeat(seq(",", $.currency))),
 
-    amount: ($) => seq($._num_expr, $.currency),
+    amount: ($) =>
+      seq(field("number", $._num_expr), field("currency", $.currency)),
     amount_with_tolerance: ($) =>
-      seq($._num_expr, "~", $._num_expr, $.currency),
+      seq(
+        field("number", $._num_expr),
+        "~",
+        field("tolerance", $._num_expr),
+        field("currency", $.currency),
+      ),
     ...number_expression,
     ...tokens,
   },

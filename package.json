@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "prettier grammar.js --write",
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test"
+    "test": "tree-sitter test --update"
   },
   "author": "",
   "license": "MIT",

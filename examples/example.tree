@@ -173,8 +173,8 @@
     date: (date [39, 0] - [39, 10])
     account: (account [39, 19] - [39, 34])
     amount: (amount [39, 37] - [39, 46]
-      (number [39, 37] - [39, 42])
-      (currency [39, 43] - [39, 46])))
+      number: (number [39, 37] - [39, 42])
+      currency: (currency [39, 43] - [39, 46])))
   (transaction [41, 0] - [45, 0]
     date: (date [41, 0] - [41, 10])
     flag: (flag [41, 11] - [41, 12])
@@ -295,8 +295,8 @@
     date: (date [69, 0] - [69, 10])
     account: (account [69, 19] - [69, 34])
     amount: (amount [69, 37] - [69, 46]
-      (number [69, 37] - [69, 42])
-      (currency [69, 43] - [69, 46])))
+      number: (number [69, 37] - [69, 42])
+      currency: (currency [69, 43] - [69, 46])))
   (query [71, 0] - [72, 0]
     date: (date [71, 0] - [71, 10])
     name: (string [71, 17] - [71, 26])

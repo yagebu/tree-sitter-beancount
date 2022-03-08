@@ -1,6 +1,6 @@
-=====
+================================================================================
 Balance with some comment lines
-=====
+================================================================================
 
 ; this is a comment
 * this also
@@ -8,19 +8,19 @@ Balance with some comment lines
 
 ; one more comment
 
----
+--------------------------------------------------------------------------------
 
 (beancount_file
- (balance
-  date: (date)
-  account: (account)
-  amount: (amount
-      (number)
-      (currency))))
+  (balance
+    date: (date)
+    account: (account)
+    amount: (amount
+      number: (number)
+      currency: (currency))))
 
-=====
+================================================================================
 Transaction with some comment lines
-=====
+================================================================================
 
 ; this is a comment
 * this also
@@ -32,18 +32,23 @@ Transaction with some comment lines
     Assets:Test  -30.00 USD
 ; one more comment
 
----
+--------------------------------------------------------------------------------
 
 (beancount_file
- (transaction
-  date: (date)
-  flag: (flag)
-  txn_strings: (txn_strings (string))
-  postings:
-  (postings
-   (posting
-    account: (account)
-    amount: (incomplete_amount (number) (currency)))
-   (posting
-    account: (account)
-    amount: (incomplete_amount (unary_num_expr (number)) (currency))))))
+  (transaction
+    date: (date)
+    flag: (flag)
+    txn_strings: (txn_strings
+      (string))
+    postings: (postings
+      (posting
+        account: (account)
+        amount: (incomplete_amount
+          (number)
+          (currency)))
+      (posting
+        account: (account)
+        amount: (incomplete_amount
+          (unary_num_expr
+            (number))
+          (currency))))))
