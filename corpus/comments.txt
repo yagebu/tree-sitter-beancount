@@ -38,17 +38,16 @@ Transaction with some comment lines
   (transaction
     date: (date)
     flag: (flag)
-    txn_strings: (txn_strings
-      (string))
+    narration: (string)
     postings: (postings
       (posting
         account: (account)
-        amount: (incomplete_amount
-          (number)
-          (currency)))
+        amount: (amount
+          number: (number)
+          currency: (currency)))
       (posting
         account: (account)
-        amount: (incomplete_amount
-          (unary_num_expr
+        amount: (amount
+          number: (unary_num_expr
             (number))
-          (currency))))))
+          currency: (currency))))))

@@ -1,17 +1,19 @@
 /**
- * A tree-sitter grammar for Beancount
+ * A tree-sitter grammar for Beancount.
  */
 
 const CURRENCY = /[A-Z][A-Z0-9\'\._\-]{0,22}[A-Z0-9]/;
 const DATE = /[0-9]{4,}[\-/][0-9]{2,}[\-/][0-9]{2,}/;
 const NUMBER = /([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/;
-const EOL = /\n/;
 const KEY = /[a-z][a-zA-Z0-9\-_]+:/;
 const TAG = /#[A-Za-z0-9\-_/.]+/;
 const LINK = /\^[A-Za-z0-9\-_/.]+/;
 const COMMENT = /;.*/;
 const FLAG = /[!&?%PSTCURM*#]/;
 
+// Entries should always end with an EOL. To avoid parsing errors on
+// whitespace in the following line, include it in the token.
+const EOL = /\n([ \r\t]+\n)?/;
 // the preceding newline is part of the indent token.
 const INDENT = /\n[ \r\t]+/;
 
@@ -66,13 +68,18 @@ const number_expression = {
 };
 
 const posting = {
-  cost_spec: ($) =>
+  cost: ($) =>
+    seq("{", field("cost_comp_list", optional($._cost_comp_list)), "}"),
+  total_cost: ($) =>
+    seq("{{", field("cost_comp_list", optional($._cost_comp_list)), "}}"),
+  _cost_comp_list: ($) => seq($._cost_comp, repeat(seq(",", $._cost_comp))),
+  _cost_comp: ($) =>
     choice(
-      seq("{", field("cost_comp_list", optional($.cost_comp_list)), "}"),
-      seq("{{", field("cost_comp_list", optional($.cost_comp_list)), "}}"),
+      field("merge", alias("*", $.merge)),
+      field("date", $.date),
+      field("string", $.string),
+      field("compound_amount", $.compound_amount),
     ),
-  cost_comp_list: ($) => seq($.cost_comp, repeat(seq(",", $.cost_comp))),
-  cost_comp: ($) => choice($.compound_amount, $.date, $.string, "*"),
   compound_amount: ($) =>
     choice(
       seq(
@@ -91,20 +98,23 @@ const posting = {
       ),
     ),
   incomplete_amount: ($) =>
-    choice(seq($._num_expr, $.currency), seq($._num_expr), seq($.currency)),
-  price_annotation: ($) =>
     choice(
-      seq("@@", optional($.incomplete_amount)),
-      seq("@", optional($.incomplete_amount)),
+      field("number", $._num_expr),
+      field("currency", $.currency),
     ),
+  price_annotation: ($) => seq("@", optional(choice($.amount, $.incomplete_amount))),
+  total_price_annotation: ($) => seq("@@", optional(choice($.amount, $.incomplete_amount))),
   posting: ($) =>
     seq(
       INDENT,
       field("flag", optional($.flag)),
       field("account", $.account),
-      field("amount", optional($.incomplete_amount)),
-      field("cost_spec", optional($.cost_spec)),
-      field("price_annotation", optional($.price_annotation)),
+      field("amount", optional(choice($.amount, $.incomplete_amount ))),
+      field("cost_spec", optional(choice($.cost, $.total_cost))),
+      field(
+        "price_annotation",
+        optional(choice($.price_annotation, $.total_price_annotation)),
+      ),
       optional(COMMENT),
       field("metadata", optional($.metadata)),
     ),
@@ -150,18 +160,22 @@ const undated_directives = {
 };
 
 const metadata = {
-  _key_value_value: ($) =>
-    choice(
-      $.string,
-      $.account,
-      $.date,
-      $.currency,
-      $.tag,
-      $.bool,
-      $._num_expr,
-      $.amount,
+  key_value: ($) =>
+    seq(
+      $.key,
+      optional(
+        choice(
+          $.string,
+          $.account,
+          $.date,
+          $.currency,
+          $.tag,
+          $.bool,
+          $._num_expr,
+          $.amount,
+        ),
+      ),
     ),
-  key_value: ($) => seq($.key, optional($._key_value_value)),
   metadata: ($) => repeat1(seq(INDENT, $.key_value)),
 };
 
@@ -173,7 +187,7 @@ module.exports = grammar({
   rules: {
     beancount_file: ($) =>
       repeat(
-        choice($._dated_directives, $._undated_directives, $._skipped_lines),
+        choice($._skipped_lines, $._dated_directives, $._undated_directives),
       ),
     _skipped_lines: ($) =>
       choice(seq(FLAG, /.*/, EOL), seq(":", /.*/, EOL), EOL, seq(COMMENT, EOL)),
@@ -198,12 +212,16 @@ module.exports = grammar({
     /* Dated directives. */
     tags_and_links: ($) =>
       repeat1(seq(optional(INDENT), choice($.tag, $.link))),
-    txn_strings: ($) => seq($.string, optional($.string)),
     transaction: ($) =>
       seq(
         field("date", $.date),
         field("flag", $.flag),
-        field("txn_strings", optional($.txn_strings)),
+        optional(
+          choice(
+            seq(field("payee", $.string), field("narration", $.string)),
+            seq(field("narration", $.string)),
+          ),
+        ),
         field("tags_and_links", optional($.tags_and_links)),
         field("metadata", optional($.metadata)),
         field("postings", $.postings),

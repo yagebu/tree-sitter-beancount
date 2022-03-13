@@ -45,12 +45,12 @@ Balance with tolerance
 
 (beancount_file
   (balance
-    (date)
-    (account)
-    (amount_with_tolerance
-      (number)
-      (number)
-      (currency))))
+    date: (date)
+    account: (account)
+    amount: (amount_with_tolerance
+      number: (number)
+      tolerance: (number)
+      currency: (currency))))
 
 ================================================================================
 Balances with Unicode accounts
