@@ -17,6 +17,7 @@ Close
 
 2012-12-12 close Assets:Test
 2012-12-12 close Assets:Äeäæœëgþst
+  metadata: "string value"
 
 --------------------------------------------------------------------------------
 
@@ -26,7 +27,11 @@ Close
     account: (account))
   (close
     date: (date)
-    account: (account)))
+    account: (account)
+    metadata: (metadata
+      (key_value
+        key: (key)
+        value: (string)))))
 
 ================================================================================
 Custom
@@ -55,7 +60,7 @@ Document
 ================================================================================
 
 2012-12-12 document Assets:Test "Test.pdf"
-2033-12-12 document Assets:Äeäæœëgþst "/home/test/a-file.pdf"
+2033-12-12 document Assets:Äeäæœëgþst "/home/test/a-file.pdf" #tag
 
 --------------------------------------------------------------------------------
 
@@ -67,13 +72,17 @@ Document
   (document
     date: (date)
     account: (account)
-    filename: (string)))
+    filename: (string)
+    tags_and_links: (tags_and_links
+      (tag))))
 
 ================================================================================
 Event
 ================================================================================
 
 2012-12-12 event "test" "asdf"
+  key: TRUE
+  key2: 20 USD
 
 --------------------------------------------------------------------------------
 
@@ -81,7 +90,16 @@ Event
   (event
     date: (date)
     type: (string)
-    description: (string)))
+    description: (string)
+    metadata: (metadata
+      (key_value
+        key: (key)
+        value: (bool))
+      (key_value
+        key: (key)
+        value: (amount
+          number: (number)
+          currency: (currency))))))
 
 ================================================================================
 Open

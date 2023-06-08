@@ -1,5 +1,6 @@
 default:
 	npm run generate
+	npx tree-sitter build-wasm
 	npm test
 	./node_modules/.bin/tree-sitter parse examples/example.beancount > tmp
 	diff examples/example.tree tmp

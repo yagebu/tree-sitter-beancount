@@ -181,8 +181,8 @@
     narration: (string [41, 21] - [41, 32])
     metadata: (metadata [41, 32] - [42, 24]
       (key_value [42, 4] - [42, 24]
-        (key [42, 4] - [42, 13])
-        (string [42, 14] - [42, 24])))
+        key: (key [42, 4] - [42, 13])
+        value: (string [42, 14] - [42, 24])))
     postings: (postings [42, 24] - [44, 46]
       (posting [42, 24] - [43, 46]
         account: (account [43, 4] - [43, 17])
@@ -281,8 +281,8 @@
           currency: (currency [65, 43] - [65, 46]))
         metadata: (metadata [65, 46] - [66, 23]
           (key_value [66, 4] - [66, 23]
-            (key [66, 4] - [66, 16])
-            (string [66, 17] - [66, 23]))))
+            key: (key [66, 4] - [66, 16])
+            value: (string [66, 17] - [66, 23]))))
       (posting [66, 23] - [67, 19]
         account: (account [67, 4] - [67, 19]))))
   (balance [69, 0] - [70, 0]
@@ -301,14 +301,14 @@
     note: (string [73, 31] - [73, 50])
     metadata: (metadata [73, 50] - [76, 26]
       (key_value [74, 4] - [74, 17]
-        (key [74, 4] - [74, 9])
-        (string [74, 10] - [74, 17]))
+        key: (key [74, 4] - [74, 9])
+        value: (string [74, 10] - [74, 17]))
       (key_value [75, 4] - [75, 14]
-        (key [75, 4] - [75, 9])
-        (bool [75, 10] - [75, 14]))
+        key: (key [75, 4] - [75, 9])
+        value: (bool [75, 10] - [75, 14]))
       (key_value [76, 4] - [76, 26]
-        (key [76, 4] - [76, 12])
-        (account [76, 13] - [76, 26]))))
+        key: (key [76, 4] - [76, 12])
+        value: (account [76, 13] - [76, 26]))))
   (document [78, 0] - [79, 0]
     date: (date [78, 0] - [78, 10])
     account: (account [78, 20] - [78, 33])
@@ -332,8 +332,8 @@
     narration: (string [83, 21] - [83, 32])
     metadata: (metadata [83, 32] - [84, 24]
       (key_value [84, 4] - [84, 24]
-        (key [84, 4] - [84, 13])
-        (string [84, 14] - [84, 24])))
+        key: (key [84, 4] - [84, 13])
+        value: (string [84, 14] - [84, 24])))
     postings: (postings [84, 24] - [88, 14]
       (posting [84, 24] - [86, 24]
         account: (account [85, 4] - [85, 17])
@@ -342,8 +342,8 @@
           currency: (currency [85, 43] - [85, 46]))
         metadata: (metadata [85, 46] - [86, 24]
           (key_value [86, 4] - [86, 24]
-            (key [86, 4] - [86, 13])
-            (string [86, 14] - [86, 24]))))
+            key: (key [86, 4] - [86, 13])
+            value: (string [86, 14] - [86, 24]))))
       (posting [86, 24] - [87, 46]
         account: (account [87, 4] - [87, 19])
         amount: (amount [87, 36] - [87, 46]
