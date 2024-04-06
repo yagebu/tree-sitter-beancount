@@ -3,10 +3,13 @@
   "version": "0.0.1",
   "description": "tree-sitter grammar for Beancount",
   "main": "bindings/node",
+  "types": "bindings/node",
   "scripts": {
     "lint": "prettier grammar.js --write",
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test --update"
+    "test": "tree-sitter test --update",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
   },
   "author": "",
   "license": "MIT",
@@ -14,7 +17,35 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "prettier": "^2.2.1",
-    "tree-sitter-cli": "^0.20.8"
-  }
+    "nan": "^2.19.0",
+    "prebuildify": "^6.0.0",
+    "prettier": "^3.2.5",
+    "tree-sitter-cli": "^0.22.2"
+  },
+  "dependencies": {
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
+  },
+  "tree-sitter": [
+    {
+      "file-types": [
+        "beancount"
+      ]
+    }
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ]
 }
