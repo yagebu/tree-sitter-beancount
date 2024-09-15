@@ -5,11 +5,10 @@
   "main": "bindings/node",
   "types": "bindings/node",
   "scripts": {
-    "lint": "prettier grammar.js --write",
-    "generate": "tree-sitter generate",
-    "test": "tree-sitter test --update",
     "install": "node-gyp-build",
-    "prebuildify": "prebuildify --napi --strip"
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
   },
   "author": "",
   "license": "MIT",
@@ -20,7 +19,7 @@
     "nan": "^2.19.0",
     "prebuildify": "^6.0.0",
     "prettier": "^3.2.5",
-    "tree-sitter-cli": "^0.22.2"
+    "tree-sitter-cli": "^0.23.0"
   },
   "dependencies": {
     "node-gyp-build": "^4.8.0"

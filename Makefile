@@ -1,7 +1,7 @@
 default:
-	npm run generate
+	npx tree-sitter generate
 	npx tree-sitter build --wasm
-	npm test
+	npx tree-sitter test
 	./node_modules/.bin/tree-sitter parse examples/example.beancount > examples/example.tree
 	./node_modules/.bin/tree-sitter parse --quiet examples/long-example.beancount
 
@@ -11,4 +11,4 @@ update:
 
 .PHONY: lint
 lint:
-	npm run lint
+	npx prettier grammar.js --write
