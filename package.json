@@ -19,7 +19,7 @@
     "nan": "^2.19.0",
     "prebuildify": "^6.0.0",
     "prettier": "^3.2.5",
-    "tree-sitter-cli": "^0.23.0"
+    "tree-sitter-cli": "^0.24.2"
   },
   "dependencies": {
     "node-gyp-build": "^4.8.0"
@@ -32,13 +32,6 @@
       "optional": true
     }
   },
-  "tree-sitter": [
-    {
-      "file-types": [
-        "beancount"
-      ]
-    }
-  ],
   "files": [
     "grammar.js",
     "binding.gyp",
