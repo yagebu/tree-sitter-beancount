@@ -1,5 +1,6 @@
 default:
 	npx tree-sitter generate
+	npx tree-sitter init
 	npx tree-sitter build --wasm
 	npx tree-sitter test
 	./node_modules/.bin/tree-sitter parse examples/example.beancount > examples/example.tree
