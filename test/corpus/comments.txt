@@ -27,7 +27,7 @@ Transaction with some comment lines
 
 2012-12-12 * "asdf"
     ; one more comment
-    Assets:Test  30.00 EUR
+    Assets:Test  30.00 EUR   ;comment
     ; inline comment
     Assets:Test  -30.00 USD
 ; one more comment

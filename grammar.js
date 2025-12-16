@@ -13,7 +13,10 @@ const INDENT = /\n[ \r\t]+/;
 
 module.exports = grammar({
   name: "beancount",
+  externals: ($) => [$._eof],
   extras: () => [/[ \t\r]/],
+  supertypes: ($) => [$.num_expr],
+  // These conflict due to all starting with an INDENT
   conflicts: ($) => [[$.posting], [$.metadata], [$.tags_and_links]],
 
   rules: {
@@ -22,8 +25,14 @@ module.exports = grammar({
       repeat(
         choice($._skipped_lines, $._dated_directives, $._undated_directives),
       ),
-    _skipped_lines: () =>
-      choice(seq(FLAG, /.*/, EOL), seq(":", /.*/, EOL), EOL, seq(COMMENT, EOL)),
+    _eol: ($) => choice(EOL, $._eof),
+    _skipped_lines: ($) =>
+      choice(
+        seq(FLAG, /.*/, $._eol),
+        seq(":", /.*/, $._eol),
+        EOL,
+        seq(COMMENT, $._eol),
+      ),
 
     // =======================================================================
     // Undated directives
@@ -38,26 +47,32 @@ module.exports = grammar({
         $.pushmeta,
         $.pushtag,
       ),
-    include: ($) => seq(alias("include", "INCLUDE"), $.string, EOL),
+    include: ($) => seq(alias("include", "INCLUDE"), $.string, $._eol),
     option: ($) =>
       seq(
         alias("option", "OPTION"),
         field("key", $.string),
         field("value", $.string),
-        EOL,
+        $._eol,
       ),
     plugin: ($) =>
       seq(
         alias("plugin", "PLUGIN"),
         field("name", $.string),
         field("config", optional($.string)),
-        EOL,
+        $._eol,
       ),
-    pushtag: ($) => seq(alias("pushtag", "PUSHTAG"), field("tag", $.tag), EOL),
-    poptag: ($) => seq(alias("poptag", "POPTAG"), field("tag", $.tag), EOL),
+    pushtag: ($) =>
+      seq(alias("pushtag", "PUSHTAG"), field("tag", $.tag), $._eol),
+    poptag: ($) => seq(alias("poptag", "POPTAG"), field("tag", $.tag), $._eol),
     pushmeta: ($) =>
-      seq(alias("pushmeta", "PUSHMETA"), field("key_value", $.key_value), EOL),
-    popmeta: ($) => seq(alias("popmeta", "POPMETA"), field("key", $.key), EOL),
+      seq(
+        alias("pushmeta", "PUSHMETA"),
+        field("key_value", $.key_value),
+        $._eol,
+      ),
+    popmeta: ($) =>
+      seq(alias("popmeta", "POPMETA"), field("key", $.key), $._eol),
 
     // =======================================================================
     // Dated directives
@@ -84,7 +99,7 @@ module.exports = grammar({
         field("account", $.account),
         field("amount", choice($.amount, $.amount_with_tolerance)),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     close: ($) =>
       seq(
@@ -92,7 +107,7 @@ module.exports = grammar({
         alias("close", "CLOSE"),
         field("account", $.account),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     commodity: ($) =>
       seq(
@@ -100,7 +115,7 @@ module.exports = grammar({
         alias("commodity", "COMMODITY"),
         field("currency", $.currency),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     custom: ($) =>
       seq(
@@ -108,10 +123,10 @@ module.exports = grammar({
         alias("custom", "CUSTOM"),
         field("name", $.string),
         repeat(
-          choice($.string, $.date, $.account, $.bool, $.amount, $._num_expr),
+          choice($.string, $.date, $.account, $.bool, $.amount, $.num_expr),
         ),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     document: ($) =>
       seq(
@@ -121,7 +136,7 @@ module.exports = grammar({
         field("filename", $.string),
         field("tags_and_links", optional($.tags_and_links)),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     event: ($) =>
       seq(
@@ -130,7 +145,7 @@ module.exports = grammar({
         field("type", $.string),
         field("description", $.string),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     note: ($) =>
       seq(
@@ -139,7 +154,7 @@ module.exports = grammar({
         field("account", $.account),
         field("note", $.string),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     open: ($) =>
       seq(
@@ -149,7 +164,7 @@ module.exports = grammar({
         field("currencies", optional($.currency_list)),
         field("booking", optional($.string)),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     pad: ($) =>
       seq(
@@ -158,7 +173,7 @@ module.exports = grammar({
         field("account", $.account),
         field("from_account", $.account),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     price: ($) =>
       seq(
@@ -167,7 +182,7 @@ module.exports = grammar({
         field("currency", $.currency),
         field("amount", $.amount),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
     transaction: ($) =>
       seq(
@@ -182,7 +197,7 @@ module.exports = grammar({
         field("tags_and_links", optional($.tags_and_links)),
         field("metadata", optional($.metadata)),
         field("postings", $.postings),
-        EOL,
+        $._eol,
       ),
     query: ($) =>
       seq(
@@ -191,7 +206,7 @@ module.exports = grammar({
         field("name", $.string),
         field("query", $.string),
         field("metadata", optional($.metadata)),
-        EOL,
+        $._eol,
       ),
 
     // =======================================================================
@@ -212,22 +227,22 @@ module.exports = grammar({
     compound_amount: ($) =>
       choice(
         seq(
-          field("number_per", optional($._num_expr)),
+          field("number_per", optional($.num_expr)),
           field("currency", $.currency),
         ),
         seq(
-          field("number_per", $._num_expr),
+          field("number_per", $.num_expr),
           field("currency", optional($.currency)),
         ),
         seq(
-          field("number_per", optional($._num_expr)),
+          field("number_per", optional($.num_expr)),
           "#",
-          field("number_total", optional($._num_expr)),
+          field("number_total", optional($.num_expr)),
           field("currency", $.currency),
         ),
       ),
     incomplete_amount: ($) =>
-      choice(field("number", $._num_expr), field("currency", $.currency)),
+      choice(field("number", $.num_expr), field("currency", $.currency)),
     price_annotation: ($) =>
       seq("@", optional(choice($.amount, $.incomplete_amount))),
     total_price_annotation: ($) =>
@@ -268,19 +283,19 @@ module.exports = grammar({
               $.currency,
               $.tag,
               $.bool,
-              $._num_expr,
+              $.num_expr,
               $.amount,
             ),
           ),
         ),
       ),
     amount: ($) =>
-      seq(field("number", $._num_expr), field("currency", $.currency)),
+      seq(field("number", $.num_expr), field("currency", $.currency)),
     amount_with_tolerance: ($) =>
       seq(
-        field("number", $._num_expr),
+        field("number", $.num_expr),
         "~",
-        field("tolerance", $._num_expr),
+        field("tolerance", $.num_expr),
         field("currency", $.currency),
       ),
 
@@ -290,29 +305,29 @@ module.exports = grammar({
     // Since the following node is hidden in the syntax trees, we need to ensure that it
     // always consists of one node. Otherwise, accessing the children by index
     // cannot work.
-    _num_expr: ($) =>
+    num_expr: ($) =>
       choice($.number, $.paren_num_expr, $.unary_num_expr, $.binary_num_expr),
-    paren_num_expr: ($) => seq("(", $._num_expr, ")"),
+    paren_num_expr: ($) => seq("(", $.num_expr, ")"),
     unary_num_expr: ($) =>
-      prec(3, choice(seq("-", $._num_expr), seq("+", $._num_expr))),
+      prec(3, choice(seq("-", $.num_expr), seq("+", $.num_expr))),
     binary_num_expr: ($) =>
       choice(
-        prec.left(2, seq($._num_expr, "*", $._num_expr)),
-        prec.left(2, seq($._num_expr, "/", $._num_expr)),
-        prec.left(1, seq($._num_expr, "+", $._num_expr)),
-        prec.left(1, seq($._num_expr, "-", $._num_expr)),
+        prec.left(2, seq($.num_expr, "*", $.num_expr)),
+        prec.left(2, seq($.num_expr, "/", $.num_expr)),
+        prec.left(1, seq($.num_expr, "+", $.num_expr)),
+        prec.left(1, seq($.num_expr, "-", $.num_expr)),
       ),
 
     // =======================================================================
     // Tokens
     // =======================================================================
     bool: () => token(/TRUE|FALSE/),
-    date: () => token(/[0-9][0-9][0-9][0-9][\-/][0-9][0-9][\-/][0-9][0-9]/),
+    date: () => token(/[0-9][0-9][0-9][0-9][-/][0-9][0-9][-/][0-9][0-9]/),
     key: () => token(/[a-z][a-zA-Z0-9\-_]+:/),
     tag: () => token(/#[A-Za-z0-9\-_/.]+/),
     link: () => token(/\^[A-Za-z0-9\-_/.]+/),
     string: () => token(/"([^"]|\\")*"/),
-    currency: () => token(/[A-Z][A-Z0-9\'\._\-]{0,22}[A-Z0-9]/),
+    currency: () => token(/[A-Z][A-Z0-9'._-]{0,22}[A-Z0-9]/),
     number: () => token(/([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/),
     flag: () => token(FLAG),
     account: () =>
