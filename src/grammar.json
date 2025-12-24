@@ -2053,13 +2053,15 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[A-Z]|[^\\x00-\\x7F]"
+            "value": "[\\p{Lu}]",
+            "flags": "u"
           },
           {
             "type": "REPEAT",
             "content": {
               "type": "PATTERN",
-              "value": "[A-Za-z0-9\\-]|[^\\x00-\\x7F]"
+              "value": "[\\p{L}\\p{Nd}-]",
+              "flags": "u"
             }
           },
           {
@@ -2073,13 +2075,15 @@
                 },
                 {
                   "type": "PATTERN",
-                  "value": "[A-Z0-9]|[^\\x00-\\x7F]"
+                  "value": "[\\p{Lu}\\p{Nd}]",
+                  "flags": "u"
                 },
                 {
                   "type": "REPEAT",
                   "content": {
                     "type": "PATTERN",
-                    "value": "[A-Za-z0-9\\-]|[^\\x00-\\x7F]"
+                    "value": "[\\p{L}\\p{Nd}-]",
+                    "flags": "u"
                   }
                 }
               ]

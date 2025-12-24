@@ -327,20 +327,20 @@ module.exports = grammar({
     account: () =>
       token(
         seq(
-          /[A-Z]|[^\x00-\x7F]/,
-          repeat(/[A-Za-z0-9\-]|[^\x00-\x7F]/),
+          // Account name should start with an uppercase letter:
+          /[\p{Lu}]/u,
+          // and then any letter or number or dash (`-`):
+          repeat(/[\p{L}\p{Nd}-]/u),
           repeat1(
             seq(
               ":",
-              /[A-Z0-9]|[^\x00-\x7F]/,
-              repeat(/[A-Za-z0-9\-]|[^\x00-\x7F]/),
+              // further segments start with uppercase or number
+              /[\p{Lu}\p{Nd}]/u,
+              // and then any letter or number or dash (`-`):
+              repeat(/[\p{L}\p{Nd}-]/u),
             ),
           ),
         ),
       ),
-    // TODO:
-    // "Correct" UTF-8-aware token rule for accounts. This could be feasible now:
-    // https://github.com/tree-sitter/tree-sitter/issues/464
-    // token(seq(/\p{Lu}[0-9\-\p{L}]*/u, repeat1(/:[0-9\p{Lu}][0-9\-\p{L}]*/u)));
   },
 });
