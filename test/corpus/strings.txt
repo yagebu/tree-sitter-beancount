@@ -1,28 +1,32 @@
 ================================================================================
-Custom
+Custom - with escapes
+:cst
 ================================================================================
 
 2012-12-12 custom "test" "stri\n\\\"ng" Account:Name
 
 --------------------------------------------------------------------------------
 
-(beancount_file
-  (custom
-    date: (date)
-    name: (string)
-    (string)
-    (account)))
+0:0  - 2:0    beancount_file
+1:0  - 2:0      custom
+1:0  - 1:10       date: date `2012-12-12`
+1:11 - 1:17       "CUSTOM"
+1:18 - 1:24       name: string `\"test\"`
+1:25 - 1:39       string `\"stri\\n\\\\\\\"ng\"`
+1:40 - 1:52       account `Account:Name`
 
 ================================================================================
-Note
+Note - unicode account and some escapes
+:cst
 ================================================================================
 
 2012-12-12 note Assets:Äeäæœëgþst "string with \\ some escapes \""
 
 --------------------------------------------------------------------------------
 
-(beancount_file
-  (note
-    (date)
-    (account)
-    (string)))
+0:0  - 2:0    beancount_file
+1:0  - 2:0      note
+1:0  - 1:10       date: date `2012-12-12`
+1:11 - 1:15       "NOTE"
+1:16 - 1:39       account: account `Assets:Äeäæœëgþst`
+1:40 - 1:72       note: string `\"string with \\\\ some escapes \\\"\"`
