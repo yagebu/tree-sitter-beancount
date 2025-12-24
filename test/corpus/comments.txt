@@ -8,6 +8,8 @@ Balance with some comment lines
 
 ; one more comment
 
+; empty lines are just skipped
+
 --------------------------------------------------------------------------------
 
 (beancount_file
@@ -23,7 +25,14 @@ Transaction with some comment lines
 ================================================================================
 
 ; this is a comment
+! this also
+# this also
+% this also
+& this also
 * this also
+: this also
+; this also
+? this also
 
 2012-12-12 * "asdf"
     ; one more comment

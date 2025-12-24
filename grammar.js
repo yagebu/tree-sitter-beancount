@@ -26,13 +26,7 @@ module.exports = grammar({
         choice($._skipped_lines, $._dated_directives, $._undated_directives),
       ),
     _eol: ($) => choice(EOL, $._eof),
-    _skipped_lines: ($) =>
-      choice(
-        seq(FLAG, /.*/, $._eol),
-        seq(":", /.*/, $._eol),
-        EOL,
-        seq(COMMENT, $._eol),
-      ),
+    _skipped_lines: ($) => choice(EOL, seq(/[*:!&#?%;].*/, $._eol)),
 
     // =======================================================================
     // Undated directives

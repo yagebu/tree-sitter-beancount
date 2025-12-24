@@ -39,40 +39,6 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[!&?%PSTCURM*#]"
-            },
-            {
-              "type": "PATTERN",
-              "value": ".*"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_eol"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ":"
-            },
-            {
-              "type": "PATTERN",
-              "value": ".*"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_eol"
-            }
-          ]
-        },
-        {
           "type": "PATTERN",
           "value": "\\n([ \\r\\t]+\\n)?"
         },
@@ -81,7 +47,7 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": ";.*"
+              "value": "[*:!&#?%;].*"
             },
             {
               "type": "SYMBOL",

@@ -600,11 +600,6 @@
     }
   },
   {
-    "type": "flag",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "include",
     "named": true,
     "fields": {},
@@ -1431,10 +1426,6 @@
     "named": false
   },
   {
-    "type": ":",
-    "named": false
-  },
-  {
     "type": "@",
     "named": false
   },
@@ -1528,6 +1519,10 @@
   },
   {
     "type": "date",
+    "named": true
+  },
+  {
+    "type": "flag",
     "named": true
   },
   {
