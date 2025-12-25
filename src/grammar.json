@@ -1997,12 +1997,21 @@
     "currency": {
       "type": "TOKEN",
       "content": {
-        "type": "PREC",
-        "value": -1,
-        "content": {
-          "type": "PATTERN",
-          "value": "[A-Z][A-Z0-9'._-]{0,22}[A-Z0-9]"
-        }
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[A-Z]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[A-Z][A-Z0-9'._-]*[A-Z0-9]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\/[A-Z0-9'._-]*[A-Z]([A-Z0-9'._-]*[A-Z0-9])?"
+          }
+        ]
       }
     },
     "number": {
@@ -2015,8 +2024,17 @@
     "flag": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "[!&?%PSTCURM*#]"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[A-Z]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[!&?%*#]"
+          }
+        ]
       }
     },
     "account": {

@@ -1,0 +1,99 @@
+================================================================================
+Misc. currencies
+:cst
+================================================================================
+
+2012-12-12 * "Test various currency formats"
+    Assets:Test  1.00 AAPL
+    Assets:Test  1.00 V
+    Assets:Test  1.00 NT.TO
+    Assets:Test  1.00 TLT_040921C144
+    Assets:Test  1.00 /6J
+    Assets:Test  1.00 /NQH21
+    Assets:Test  1.00 /NQH21_QNEG21C13100
+
+2012-12-12 * "Test various currency formats (missing numbers)"
+    Assets:Test       AAPL
+    Assets:Test       V
+    Assets:Test       NT.TO
+    Assets:Test       TLT_040921C144
+    Assets:Test       /6J
+    Assets:Test       /NQH21
+    Assets:Test       /NQH21_QNEG21C13100
+
+--------------------------------------------------------------------------------
+
+1:0   - 18:0    beancount_file
+1:0   - 9:0       transaction
+1:0   - 1:10        date: date `2012-12-12`
+1:11  - 1:12        flag: flag `*`
+1:13  - 1:44        narration: string `\"Test various currency formats\"`
+2:4   - 8:41        postings: postings
+2:4   - 2:26          posting
+2:4   - 2:15            account: account `Assets:Test`
+2:17  - 2:26            amount: amount
+2:17  - 2:21              number: number `1.00`
+2:22  - 2:26              currency: currency `AAPL`
+3:4   - 3:23          posting
+3:4   - 3:15            account: account `Assets:Test`
+3:17  - 3:23            amount: amount
+3:17  - 3:21              number: number `1.00`
+3:22  - 3:23              currency: currency `V`
+4:4   - 4:27          posting
+4:4   - 4:15            account: account `Assets:Test`
+4:17  - 4:27            amount: amount
+4:17  - 4:21              number: number `1.00`
+4:22  - 4:27              currency: currency `NT.TO`
+5:4   - 5:36          posting
+5:4   - 5:15            account: account `Assets:Test`
+5:17  - 5:36            amount: amount
+5:17  - 5:21              number: number `1.00`
+5:22  - 5:36              currency: currency `TLT_040921C144`
+6:4   - 6:25          posting
+6:4   - 6:15            account: account `Assets:Test`
+6:17  - 6:25            amount: amount
+6:17  - 6:21              number: number `1.00`
+6:22  - 6:25              currency: currency `/6J`
+7:4   - 7:28          posting
+7:4   - 7:15            account: account `Assets:Test`
+7:17  - 7:28            amount: amount
+7:17  - 7:21              number: number `1.00`
+7:22  - 7:28              currency: currency `/NQH21`
+8:4   - 8:41          posting
+8:4   - 8:15            account: account `Assets:Test`
+8:17  - 8:41            amount: amount
+8:17  - 8:21              number: number `1.00`
+8:22  - 8:41              currency: currency `/NQH21_QNEG21C13100`
+10:0  - 18:0      transaction
+10:0  - 10:10       date: date `2012-12-12`
+10:11 - 10:12       flag: flag `*`
+10:13 - 10:62       narration: string `\"Test various currency formats (missing numbers)\"`
+11:4  - 17:41       postings: postings
+11:4  - 11:26         posting
+11:4  - 11:15           account: account `Assets:Test`
+11:22 - 11:26           amount: incomplete_amount
+11:22 - 11:26             currency: currency `AAPL`
+12:4  - 12:23         posting
+12:4  - 12:15           account: account `Assets:Test`
+12:22 - 12:23           amount: incomplete_amount
+12:22 - 12:23             currency: currency `V`
+13:4  - 13:27         posting
+13:4  - 13:15           account: account `Assets:Test`
+13:22 - 13:27           amount: incomplete_amount
+13:22 - 13:27             currency: currency `NT.TO`
+14:4  - 14:36         posting
+14:4  - 14:15           account: account `Assets:Test`
+14:22 - 14:36           amount: incomplete_amount
+14:22 - 14:36             currency: currency `TLT_040921C144`
+15:4  - 15:25         posting
+15:4  - 15:15           account: account `Assets:Test`
+15:22 - 15:25           amount: incomplete_amount
+15:22 - 15:25             currency: currency `/6J`
+16:4  - 16:28         posting
+16:4  - 16:15           account: account `Assets:Test`
+16:22 - 16:28           amount: incomplete_amount
+16:22 - 16:28             currency: currency `/NQH21`
+17:4  - 17:41         posting
+17:4  - 17:15           account: account `Assets:Test`
+17:22 - 17:41           amount: incomplete_amount
+17:22 - 17:41             currency: currency `/NQH21_QNEG21C13100`

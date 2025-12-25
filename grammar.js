@@ -4,7 +4,6 @@
  */
 
 const COMMENT = /;.*/;
-const FLAG = /[!&?%PSTCURM*#]/;
 
 module.exports = grammar({
   name: "beancount",
@@ -315,9 +314,16 @@ module.exports = grammar({
     tag: () => token(/#[A-Za-z0-9\-_/.]+/),
     link: () => token(/\^[A-Za-z0-9\-_/.]+/),
     string: () => token(/"([^"]|\\")*"/),
-    currency: () => token(prec(-1, /[A-Z][A-Z0-9'._-]{0,22}[A-Z0-9]/)),
+    currency: () =>
+      token(
+        choice(
+          /[A-Z]/,
+          /[A-Z][A-Z0-9'._-]*[A-Z0-9]/,
+          /\/[A-Z0-9'._-]*[A-Z]([A-Z0-9'._-]*[A-Z0-9])?/,
+        ),
+      ),
     number: () => token(/([0-9]+|[0-9][0-9,]+[0-9])(\.[0-9]*)?/),
-    flag: () => token(FLAG),
+    flag: () => token(choice(/[A-Z]/, /[!&?%*#]/)),
     account: () =>
       token(
         seq(
