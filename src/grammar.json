@@ -2028,8 +2028,12 @@
     "currency": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "[A-Z][A-Z0-9'._-]{0,22}[A-Z0-9]"
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[A-Z][A-Z0-9'._-]{0,22}[A-Z0-9]"
+        }
       }
     },
     "number": {

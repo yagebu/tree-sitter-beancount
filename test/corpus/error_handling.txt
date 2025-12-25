@@ -34,3 +34,68 @@ Invalid accounts
 1:0  - 1:10        date `2012-12-12`
 1:11 - 1:15        "OPEN"
 1:16 - 1:30        •ERROR `Assets:invalid`
+
+================================================================================
+Invalid accounts
+:cst
+================================================================================
+
+2012-12-12 open Assets:Cash USD "INVALIDBOOKINGMETHOD"
+2000-01-01 open Assets:Cash EUR
+
+2000-01-01 document Assets:Cash "relative/path"
+
+2022-01-21 * "invalid syntax"
+  Income:US:Hooli:Match401k                       -600.00 USD USD USD
+
+2022-01-21 * "valid syntax"
+  Income:US:Hooli:Match401k                       -600.00 USD
+
+--------------------------------------------------------------------------------
+
+0:0   - 11:0    •beancount_file
+1:0   - 2:0       open
+1:0   - 1:10        date: date `2012-12-12`
+1:11  - 1:15        "OPEN"
+1:16  - 1:27        account: account `Assets:Cash`
+1:28  - 1:31        currencies: currency_list
+1:28  - 1:31          currency `USD`
+1:32  - 1:54        booking: string `\"INVALIDBOOKINGMETHOD\"`
+2:0   - 3:0       open
+2:0   - 2:10        date: date `2000-01-01`
+2:11  - 2:15        "OPEN"
+2:16  - 2:27        account: account `Assets:Cash`
+2:28  - 2:31        currencies: currency_list
+2:28  - 2:31          currency `EUR`
+4:0   - 5:0       document
+4:0   - 4:10        date: date `2000-01-01`
+4:11  - 4:19        "DOCUMENT"
+4:20  - 4:31        account: account `Assets:Cash`
+4:32  - 4:47        filename: string `\"relative/path\"`
+6:0   - 8:0       •transaction
+6:0   - 6:10        date: date `2022-01-21`
+6:11  - 6:12        flag: flag `*`
+6:13  - 6:29        narration: string `\"invalid syntax\"`
+6:29  - 7:61        postings: postings
+6:29  - 7:61          posting
+7:2   - 7:27            account: account `Income:US:Hooli:Match401k`
+7:50  - 7:61            amount: amount
+7:50  - 7:57              number: unary_num_expr
+7:50  - 7:51                "-"
+7:51  - 7:57                number `600.00`
+7:58  - 7:61              currency: currency `USD`
+7:62  - 7:69        •ERROR
+7:62  - 7:65          currency `USD`
+7:66  - 7:69          currency `USD`
+9:0   - 11:0      transaction
+9:0   - 9:10        date: date `2022-01-21`
+9:11  - 9:12        flag: flag `*`
+9:13  - 9:27        narration: string `\"valid syntax\"`
+9:27  - 10:61       postings: postings
+9:27  - 10:61         posting
+10:2  - 10:27           account: account `Income:US:Hooli:Match401k`
+10:50 - 10:61           amount: amount
+10:50 - 10:57             number: unary_num_expr
+10:50 - 10:51               "-"
+10:51 - 10:57               number `600.00`
+10:58 - 10:61             currency: currency `USD`
