@@ -5,16 +5,11 @@
 
 const COMMENT = /;.*/;
 const FLAG = /[!&?%PSTCURM*#]/;
-// Entries should always end with an EOL. To avoid parsing errors on
-// whitespace in the following line, include it in the token.
-const EOL = /\n([ \r\t]+\n)?/;
-// the preceding newline is part of the indent token.
-const INDENT = /\n[ \r\t]+/;
 
 module.exports = grammar({
   name: "beancount",
-  externals: ($) => [$._eof],
-  extras: () => [/[ \t\r]/],
+  externals: ($) => [$._eol, $._indent],
+  extras: () => [/[ \t\r\n]/],
   supertypes: ($) => [$.num_expr],
   // These conflict due to all starting with an INDENT
   conflicts: ($) => [[$.posting], [$.metadata], [$.tags_and_links]],
@@ -25,8 +20,7 @@ module.exports = grammar({
       repeat(
         choice($._skipped_lines, $._dated_directives, $._undated_directives),
       ),
-    _eol: ($) => choice(EOL, $._eof),
-    _skipped_lines: ($) => choice(EOL, seq(/[*:!&#?%;].*/, $._eol)),
+    _skipped_lines: () => /[*:!&#?%;].*/,
 
     // =======================================================================
     // Undated directives
@@ -243,7 +237,7 @@ module.exports = grammar({
       seq("@@", optional(choice($.amount, $.incomplete_amount))),
     posting: ($) =>
       seq(
-        INDENT,
+        $._indent,
         field("flag", optional($.flag)),
         field("account", $.account),
         field("amount", optional(choice($.amount, $.incomplete_amount))),
@@ -255,15 +249,15 @@ module.exports = grammar({
         optional(COMMENT),
         field("metadata", optional($.metadata)),
       ),
-    postings: ($) => repeat1(choice($.posting, seq(INDENT, COMMENT))),
+    postings: ($) => repeat1(choice($.posting, seq($._indent, COMMENT))),
 
     // =======================================================================
     // Various building blocks
     // =======================================================================
     tags_and_links: ($) =>
-      repeat1(seq(optional(INDENT), choice($.tag, $.link))),
+      repeat1(seq(optional($._indent), choice($.tag, $.link))),
     currency_list: ($) => seq($.currency, repeat(seq(",", $.currency))),
-    metadata: ($) => repeat1(seq(INDENT, $.key_value)),
+    metadata: ($) => repeat1(seq($._indent, $.key_value)),
     key_value: ($) =>
       seq(
         field("key", $.key),

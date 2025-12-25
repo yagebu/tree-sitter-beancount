@@ -8,7 +8,7 @@ Commodity
 
 --------------------------------------------------------------------------------
 
-0:0  - 3:0    •beancount_file
+1:0  - 3:0    •beancount_file
 1:0  - 2:0      •commodity
 1:0  - 1:10        date: date `2012-12-12`
 1:11 - 1:20        "COMMODITY"
@@ -29,8 +29,8 @@ Invalid accounts
 
 --------------------------------------------------------------------------------
 
-0:0  - 2:0    •beancount_file
-1:0  - 1:30     •ERROR
+1:0  - 2:0    •beancount_file
+1:0  - 2:0      •ERROR
 1:0  - 1:10        date `2012-12-12`
 1:11 - 1:15        "OPEN"
 1:16 - 1:30        •ERROR `Assets:invalid`
@@ -53,7 +53,7 @@ Invalid accounts
 
 --------------------------------------------------------------------------------
 
-0:0   - 11:0    •beancount_file
+1:0   - 11:0    •beancount_file
 1:0   - 2:0       open
 1:0   - 1:10        date: date `2012-12-12`
 1:11  - 1:15        "OPEN"
@@ -76,8 +76,8 @@ Invalid accounts
 6:0   - 6:10        date: date `2022-01-21`
 6:11  - 6:12        flag: flag `*`
 6:13  - 6:29        narration: string `\"invalid syntax\"`
-6:29  - 7:61        postings: postings
-6:29  - 7:61          posting
+7:2   - 7:61        postings: postings
+7:2   - 7:61          posting
 7:2   - 7:27            account: account `Income:US:Hooli:Match401k`
 7:50  - 7:61            amount: amount
 7:50  - 7:57              number: unary_num_expr
@@ -91,8 +91,8 @@ Invalid accounts
 9:0   - 9:10        date: date `2022-01-21`
 9:11  - 9:12        flag: flag `*`
 9:13  - 9:27        narration: string `\"valid syntax\"`
-9:27  - 10:61       postings: postings
-9:27  - 10:61         posting
+10:2  - 10:61       postings: postings
+10:2  - 10:61         posting
 10:2  - 10:27           account: account `Income:US:Hooli:Match401k`
 10:50 - 10:61           amount: amount
 10:50 - 10:57             number: unary_num_expr
