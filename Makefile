@@ -1,6 +1,5 @@
 default: node_modules
 	npx tree-sitter generate
-	npx tree-sitter init
 	npx tree-sitter build --wasm
 	npx tree-sitter test
 	./node_modules/.bin/tree-sitter parse examples/example.beancount > examples/example.tree
@@ -13,6 +12,7 @@ node_modules: package-lock.json
 .PHONY: update
 update:
 	./node_modules/.bin/tree-sitter parse examples/example.beancount > examples/example.tree
+	npx tree-sitter init --update
 
 .PHONY: lint
 lint:

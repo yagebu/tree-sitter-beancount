@@ -4,6 +4,7 @@
   "description": "tree-sitter grammar for Beancount",
   "main": "bindings/node",
   "types": "bindings/node",
+  "type": "module",
   "scripts": {
     "install": "node-gyp-build",
     "prestart": "tree-sitter build --wasm",

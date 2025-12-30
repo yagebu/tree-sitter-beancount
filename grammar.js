@@ -5,7 +5,7 @@
 
 const COMMENT = /;.*/;
 
-module.exports = grammar({
+export default grammar({
   name: "beancount",
   externals: ($) => [$._eol, $._indent],
   extras: () => [/[ \t\r\n]/],
