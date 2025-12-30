@@ -17,16 +17,25 @@ void * tree_sitter_beancount_external_scanner_create() {
   return NULL;
 }
 
-void tree_sitter_beancount_external_scanner_destroy() {
+void tree_sitter_beancount_external_scanner_destroy(
+  __attribute__((unused)) void *payload
+) {
   // noop
 }
 
-unsigned tree_sitter_beancount_external_scanner_serialize() {
+unsigned tree_sitter_beancount_external_scanner_serialize(
+  __attribute__((unused)) void *payload,
+  __attribute__((unused)) char *buffer
+) {
   return 0;
 }
 
 
-void tree_sitter_beancount_external_scanner_deserialize() {
+void tree_sitter_beancount_external_scanner_deserialize(
+  __attribute__((unused)) void *payload,
+  __attribute__((unused)) char *buffer,
+  __attribute__((unused)) unsigned length
+) {
   // noop
 }
 
