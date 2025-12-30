@@ -15,4 +15,4 @@ permissions:
 
 jobs:
   release:
-    uses: tree-sitter/workflows/.github/workflows/release.yml@356ec512427774d7d3cafec70111fc40a52dc106 # v1
+    uses: tree-sitter/workflows/.github/workflows/release.yml@9a10bab3d9bb66d2cc9283b65fad01ddca3ef62c
