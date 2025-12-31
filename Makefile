@@ -6,7 +6,7 @@ default: node_modules
 	./node_modules/.bin/tree-sitter parse --quiet examples/long-example.beancount
 
 node_modules: package-lock.json
-	npm install --no-progress
+	CXXFLAGS="--std=c++20" npm install --no-progress
 	touch -m node_modules
 
 .PHONY: update
@@ -24,7 +24,9 @@ clean:
 	rm -rf node_modules
 	rm -rf target
 	rm -rf .venv
+	find . -type f -name '*.o' -delete
 	find . -type f -name '*.so' -delete
+	find . -type f -name '*.wasm' -delete
 
 .PHONY: update-corpus-tests
 update-corpus-tests:
