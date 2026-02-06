@@ -2044,7 +2044,7 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[\\p{Lu}]",
+            "value": "[\\p{Lu}\\p{Lo}]",
             "flags": "u"
           },
           {
@@ -2066,7 +2066,7 @@
                 },
                 {
                   "type": "PATTERN",
-                  "value": "[\\p{Lu}\\p{Nd}]",
+                  "value": "[\\p{Lu}\\p{Lo}\\p{Nd}]",
                   "flags": "u"
                 },
                 {
