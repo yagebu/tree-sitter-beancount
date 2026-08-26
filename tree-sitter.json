@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
       "name": "beancount",
@@ -19,11 +20,13 @@
     }
   },
   "bindings": {
-    "c": true,
-    "go": true,
+    "c": false,
+    "go": false,
+    "java": false,
     "node": true,
     "python": true,
     "rust": true,
-    "swift": true
+    "swift": false,
+    "zig": false
   }
 }

@@ -20,7 +20,7 @@
     "nan": "^2.19.0",
     "prebuildify": "^6.0.0",
     "prettier": "^3.2.5",
-    "tree-sitter-cli": "^0.26"
+    "tree-sitter-cli": "^0.27"
   },
   "dependencies": {
     "node-gyp-build": "^4.8.0"
@@ -40,5 +40,9 @@
     "bindings/node/*",
     "queries/*",
     "src/**"
-  ]
+  ],
+  "allowScripts": {
+    "tree-sitter@0.25.1": true,
+    "tree-sitter-cli@0.27.0": true
+  }
 }
