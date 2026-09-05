@@ -5,6 +5,8 @@
 
 const COMMENT = /;.*/;
 
+const eol = ($) => choice($._eol, eof());
+
 export default grammar({
   name: "beancount",
   externals: ($) => [$._eol, $._indent],
@@ -34,32 +36,32 @@ export default grammar({
         $.pushmeta,
         $.pushtag,
       ),
-    include: ($) => seq(alias("include", "INCLUDE"), $.string, $._eol),
+    include: ($) => seq(alias("include", "INCLUDE"), $.string, eol($)),
     option: ($) =>
       seq(
         alias("option", "OPTION"),
         field("key", $.string),
         field("value", $.string),
-        $._eol,
+        eol($),
       ),
     plugin: ($) =>
       seq(
         alias("plugin", "PLUGIN"),
         field("name", $.string),
         field("config", optional($.string)),
-        $._eol,
+        eol($),
       ),
     pushtag: ($) =>
-      seq(alias("pushtag", "PUSHTAG"), field("tag", $.tag), $._eol),
-    poptag: ($) => seq(alias("poptag", "POPTAG"), field("tag", $.tag), $._eol),
+      seq(alias("pushtag", "PUSHTAG"), field("tag", $.tag), eol($)),
+    poptag: ($) => seq(alias("poptag", "POPTAG"), field("tag", $.tag), eol($)),
     pushmeta: ($) =>
       seq(
         alias("pushmeta", "PUSHMETA"),
         field("key_value", $.key_value),
-        $._eol,
+        eol($),
       ),
     popmeta: ($) =>
-      seq(alias("popmeta", "POPMETA"), field("key", $.key), $._eol),
+      seq(alias("popmeta", "POPMETA"), field("key", $.key), eol($)),
 
     // =======================================================================
     // Dated directives
@@ -86,7 +88,7 @@ export default grammar({
         field("account", $.account),
         field("amount", choice($.amount, $.amount_with_tolerance)),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     close: ($) =>
       seq(
@@ -94,7 +96,7 @@ export default grammar({
         alias("close", "CLOSE"),
         field("account", $.account),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     commodity: ($) =>
       seq(
@@ -102,7 +104,7 @@ export default grammar({
         alias("commodity", "COMMODITY"),
         field("currency", $.currency),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     custom: ($) =>
       seq(
@@ -113,7 +115,7 @@ export default grammar({
           choice($.string, $.date, $.account, $.bool, $.amount, $.num_expr),
         ),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     document: ($) =>
       seq(
@@ -123,7 +125,7 @@ export default grammar({
         field("filename", $.string),
         field("tags_and_links", optional($.tags_and_links)),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     event: ($) =>
       seq(
@@ -132,7 +134,7 @@ export default grammar({
         field("type", $.string),
         field("description", $.string),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     note: ($) =>
       seq(
@@ -141,7 +143,7 @@ export default grammar({
         field("account", $.account),
         field("note", $.string),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     open: ($) =>
       seq(
@@ -151,7 +153,7 @@ export default grammar({
         field("currencies", optional($.currency_list)),
         field("booking", optional($.string)),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     pad: ($) =>
       seq(
@@ -160,7 +162,7 @@ export default grammar({
         field("account", $.account),
         field("from_account", $.account),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     price: ($) =>
       seq(
@@ -169,7 +171,7 @@ export default grammar({
         field("currency", $.currency),
         field("amount", $.amount),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
     transaction: ($) =>
       seq(
@@ -184,7 +186,7 @@ export default grammar({
         field("tags_and_links", optional($.tags_and_links)),
         field("metadata", optional($.metadata)),
         field("postings", $.postings),
-        $._eol,
+        eol($),
       ),
     query: ($) =>
       seq(
@@ -193,7 +195,7 @@ export default grammar({
         field("name", $.string),
         field("query", $.string),
         field("metadata", optional($.metadata)),
-        $._eol,
+        eol($),
       ),
 
     // =======================================================================

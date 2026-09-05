@@ -76,8 +76,16 @@
           "name": "string"
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -110,8 +118,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -152,8 +168,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -178,8 +202,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -204,8 +236,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -230,8 +270,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -256,8 +304,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -376,8 +432,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -426,8 +490,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -476,8 +548,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -558,8 +638,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -632,8 +720,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -690,8 +786,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -748,8 +852,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -830,8 +942,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -888,8 +1008,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -946,8 +1074,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -1058,8 +1194,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
@@ -1116,8 +1260,16 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_eol"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_eol"
+            },
+            {
+              "type": "EOF"
+            }
+          ]
         }
       ]
     },
